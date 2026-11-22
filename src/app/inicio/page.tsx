@@ -16,7 +16,6 @@ import { TimeOffManager } from "@/features/time-off/components/time-off-manager"
 import { getLocalDateForInstant } from "@/features/availability/availability";
 import { TeamManager } from "@/features/staff/components/team-manager";
 import { DashboardMetrics } from "@/features/dashboard/components/dashboard-metrics";
-import { getBusinessDashboardMetrics } from "@/features/dashboard/queries";
 
 export const metadata = {
   title: "Tu espacio",
@@ -39,6 +38,8 @@ async function AuthenticatedHome() {
     redirect("/iniciar-sesion");
   }
 
+  const { getBusinessDashboardMetrics } =
+    await import("@/features/dashboard/queries");
   const { db } = await import("@/db");
   const {
     appointments,
