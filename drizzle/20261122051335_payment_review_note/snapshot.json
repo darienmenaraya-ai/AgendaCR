@@ -1,0 +1,77 @@
+{
+  "type": "diff",
+  "version": "10",
+  "dialect": "postgres",
+  "id": "feebfe26-da91-4055-9998-c375833a81f0",
+  "prevIds": [
+    "c4f9a45c-d2c9-4176-bc70-65fee68ea4ea"
+  ],
+  "footprints": [
+    {
+      "statementType": "add_column",
+      "statementTarget": [
+        "column",
+        "public",
+        "payments",
+        "review_note"
+      ],
+      "writes": [
+        "s|col|public.payments.review_note",
+        "n|col|public.payments.review_note",
+        "e|col|public.payments.review_note"
+      ],
+      "reads": [
+        "n|tbl|public.payments",
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "alter_check",
+      "statementTarget": [
+        "table",
+        "public",
+        "payments"
+      ],
+      "writes": [
+        "s|ck|public.payments.payments_review_state"
+      ],
+      "reads": [
+        "n|tbl|public.payments",
+        "n|sch|public",
+        "n|col|public.payments.status",
+        "n|col|public.payments.reviewed_by",
+        "n|col|public.payments.reviewed_at",
+        "n|col|public.payments.review_note",
+        "e|col|public.payments.status",
+        "e|col|public.payments.reviewed_by",
+        "e|col|public.payments.reviewed_at"
+      ],
+      "sqlHash": "5d8de33c38d52868"
+    }
+  ],
+  "deltas": [
+    {
+      "op": "create",
+      "row": {
+        "schema": "public",
+        "table": "payments",
+        "name": "review_note",
+        "type": "text",
+        "typeSchema": null,
+        "notNull": false,
+        "dimensions": 0,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "entityType": "columns"
+      }
+    },
+    {
+      "op": "alter",
+      "key": "checks\u0000[\"public\",\"payments\",\"payments_review_state\"]",
+      "set": {
+        "value": "(\n        (\"status\" = 'reported' and \"reviewed_by\" is null and \"reviewed_at\" is null and \"review_note\" is null)\n        or\n        (\"status\" = 'verified' and \"reviewed_by\" is not null and \"reviewed_at\" is not null and \"review_note\" is null)\n        or\n        (\"status\" = 'rejected' and \"reviewed_by\" is not null and \"reviewed_at\" is not null and \"review_note\" is not null and length(btrim(\"review_note\")) between 3 and 300)\n      )"
+      }
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "type": "diff",
+  "version": "10",
+  "dialect": "postgres",
+  "id": "31de68d2-470d-4543-a40b-e0d167ea7ca5",
+  "prevIds": [
+    "c2e380a4-a662-4171-9d6a-1a85ca0ddea0"
+  ],
+  "footprints": [
+    {
+      "statementType": "add_column",
+      "statementTarget": [
+        "column",
+        "public",
+        "rate_limit",
+        "id"
+      ],
+      "writes": [
+        "s|col|public.rate_limit.id",
+        "n|col|public.rate_limit.id",
+        "e|col|public.rate_limit.id"
+      ],
+      "reads": [
+        "n|tbl|public.rate_limit",
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "alter_pk",
+      "statementTarget": [
+        "table",
+        "public",
+        "rate_limit"
+      ],
+      "writes": [
+        "s|pk|public.rate_limit"
+      ],
+      "reads": [
+        "n|tbl|public.rate_limit",
+        "n|sch|public",
+        "n|col|public.rate_limit.id"
+      ],
+      "sharedWrites": [
+        "e|uniqueness|public.rate_limit.key"
+      ],
+      "sqlHash": "50110989458be038"
+    },
+    {
+      "statementType": "add_unique",
+      "statementTarget": [
+        "table",
+        "public",
+        "rate_limit"
+      ],
+      "writes": [
+        "s|uq|public.rate_limit.rate_limit_key_key",
+        "n|uq|public.rate_limit.rate_limit_key_key",
+        "e|uq|public.rate_limit.rate_limit_key_key",
+        "n|con|public.rate_limit.rate_limit_key_key",
+        "n|rel|public.rate_limit_key_key"
+      ],
+      "reads": [
+        "n|tbl|public.rate_limit",
+        "n|sch|public",
+        "n|col|public.rate_limit.key"
+      ]
+    }
+  ],
+  "deltas": [
+    {
+      "op": "create",
+      "row": {
+        "schema": "public",
+        "table": "rate_limit",
+        "name": "id",
+        "type": "uuid",
+        "typeSchema": null,
+        "notNull": true,
+        "dimensions": 0,
+        "default": "gen_random_uuid()",
+        "generated": null,
+        "identity": null,
+        "entityType": "columns"
+      }
+    },
+    {
+      "op": "create",
+      "row": {
+        "schema": "public",
+        "table": "rate_limit",
+        "name": "rate_limit_key_key",
+        "nameExplicit": false,
+        "columns": [
+          "key"
+        ],
+        "nullsNotDistinct": false,
+        "entityType": "uniques"
+      }
+    },
+    {
+      "op": "alter",
+      "key": "pks\u0000[\"public\",\"rate_limit\",\"rate_limit_pkey\"]",
+      "set": {
+        "columns": [
+          "id"
+        ]
+      }
+    }
+  ]
+}
