@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import type { ReactNode } from "react";
 import { ServiceWorkerRegistration } from "@/components/service-worker-registration";
 import "@fullcalendar/react/skeleton.css";
 import "@fullcalendar/react/themes/breezy/theme.css";
@@ -35,7 +36,7 @@ export const viewport: Viewport = {
   themeColor: "#163e35",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="es-CR"
