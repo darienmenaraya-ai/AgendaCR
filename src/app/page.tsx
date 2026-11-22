@@ -3,25 +3,25 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main className="min-h-screen overflow-hidden bg-[#f7f8f5] text-[#172b27]">
-      <header className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 sm:px-10 lg:px-12">
+      <header className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-y-2 px-6 py-5 sm:flex-nowrap sm:gap-y-0 sm:px-10 lg:px-12">
         <Link
           href="/"
-          className="flex items-center gap-3 font-semibold tracking-tight"
+          className="flex items-center gap-2 font-semibold tracking-tight sm:gap-3"
         >
           <span className="grid size-10 place-items-center rounded-xl bg-[#1e5949] text-[#c5efd2]">
             <CalendarMark />
           </span>
-          <span className="text-xl">AgendaCR</span>
+          <span className="text-lg sm:text-xl">AgendaCR</span>
         </Link>
-        <nav className="flex items-center gap-3 text-sm font-semibold">
+        <nav className="ml-auto flex items-center gap-0 text-sm font-semibold sm:gap-3">
           <Link
-            className="rounded-xl px-4 py-2.5 text-[#35554c] transition hover:bg-white"
+            className="whitespace-nowrap rounded-xl px-1.5 py-2.5 text-[#35554c] transition hover:bg-white sm:px-4"
             href="/iniciar-sesion"
           >
             Iniciar sesión
           </Link>
           <Link
-            className="rounded-xl bg-[#1e5949] px-4 py-2.5 text-white transition hover:bg-[#17483b]"
+            className="whitespace-nowrap rounded-xl bg-[#1e5949] px-1.5 py-2.5 text-white transition hover:bg-[#17483b] sm:px-4"
             href="/registro"
           >
             Crear cuenta

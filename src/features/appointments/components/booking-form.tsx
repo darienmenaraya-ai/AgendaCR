@@ -107,15 +107,23 @@ export function BookingForm({
 
   if (state.success) {
     return (
-      <div className="rounded-2xl border border-[#cce5d2] bg-[#f0f8f1] p-6 sm:p-8">
+      <section
+        aria-labelledby="booking-success-title"
+        aria-live="polite"
+        className="rounded-2xl border border-[#cce5d2] bg-[#f0f8f1] p-6 sm:p-8"
+        role="status"
+      >
         <span className="grid size-11 place-items-center rounded-full bg-[#d9f0de] text-lg text-[#1e5949]">
           ✓
         </span>
-        <h3 className="mt-4 text-xl font-semibold text-[#1e5949]">
+        <h3
+          className="mt-4 text-xl font-semibold text-[#1e5949]"
+          id="booking-success-title"
+        >
           Solicitud enviada
         </h3>
         <p className="mt-2 text-sm leading-6 text-[#526b60]">{state.success}</p>
-      </div>
+      </section>
     );
   }
 
@@ -169,7 +177,7 @@ export function BookingForm({
         />
       </label>
 
-      <fieldset>
+      <fieldset aria-busy={isLoadingSlots}>
         <legend className="text-sm font-medium">Horarios disponibles</legend>
         {isLoadingSlots ? (
           <p className="mt-3 text-sm text-[#71817c]">Buscando espacios…</p>

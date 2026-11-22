@@ -229,7 +229,7 @@ Se agrega con una **migración SQL personalizada** (`drizzle-kit generate --cust
 ### Fase 2: producto competitivo
 - [x] Motor de disponibilidad + restricción anti-solapamiento (migración lista; falta verificar en Neon)
 - [x] Pruebas unitarias del motor de disponibilidad
-- [ ] Prueba de concurrencia real contra PostgreSQL/Neon
+- [x] Prueba de concurrencia real contra PostgreSQL/Neon
 - [x] Varios empleados con agenda propia
 - [x] Calendario administrativo (FullCalendar)
 - [x] Días libres y vacaciones
@@ -243,7 +243,7 @@ Se agrega con una **migración SQL personalizada** (`drizzle-kit generate --cust
 - [x] Registro manual de pagos SINPE Móvil (reportes y revisión; no procesa transferencias)
 - [x] PWA instalable (manifiesto, iconos y página sin conexión)
 - [ ] Asistente de reservas con IA
-- [ ] README final con capturas, diagrama y "decisiones técnicas"
+- [x] README final con capturas, diagrama y "decisiones técnicas"
 
 ---
 
@@ -265,7 +265,7 @@ Se agrega con una **migración SQL personalizada** (`drizzle-kit generate --cust
 - [x] Límite de peticiones en autenticación, disponibilidad, reservas e invitaciones
 - [x] Sin secretos en el repositorio
 - [x] Pruebas de la lógica de disponibilidad
-- [ ] Prueba de concurrencia: dos reservas simultáneas del mismo horario, solo una gana
+- [x] Prueba de concurrencia: dos reservas simultáneas del mismo horario, solo una gana
 - [ ] Prueba end-to-end del flujo completo de reserva (Playwright)
 - [ ] Accesibilidad básica (teclado, contraste, etiquetas)
 - [ ] Diseño responsive revisado en móvil

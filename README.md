@@ -2,6 +2,27 @@
 
 AgendaCR es una plataforma de reservas para negocios de servicios en Costa Rica. Los clientes pueden consultar servicios y horarios, solicitar una cita y revisar sus reservas. Cada negocio administra su agenda desde un espacio privado.
 
+## Capturas
+
+<table>
+  <tr>
+    <th>Página principal en escritorio</th>
+    <th>Página principal en móvil</th>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/home-desktop.jpg" alt="Página principal de AgendaCR en una pantalla de escritorio" /></td>
+    <td><img src="docs/screenshots/home-mobile.jpg" width="260" alt="Página principal de AgendaCR en una pantalla móvil" /></td>
+  </tr>
+  <tr>
+    <th>Inicio de sesión en móvil</th>
+    <th>Registro en móvil</th>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/signin-mobile.jpg" width="260" alt="Formulario de inicio de sesión de AgendaCR en móvil" /></td>
+    <td><img src="docs/screenshots/signup-mobile.jpg" width="260" alt="Formulario de registro de AgendaCR en móvil" /></td>
+  </tr>
+</table>
+
 ## Tecnologías
 
 - Next.js 16 con App Router y React 19
@@ -76,6 +97,24 @@ Los clientes pueden reportar pagos manuales por SINPE Móvil con monto y referen
 
 ## Decisiones importantes
 
+### Arquitectura del flujo de reserva
+
+```mermaid
+flowchart TD
+    Cliente[Cliente] --> Perfil[Perfil público del negocio]
+    Perfil --> Disponibilidad[API de disponibilidad]
+    Disponibilidad --> Motor[Motor de horarios, servicios y ausencias]
+    Motor --> Neon[(PostgreSQL en Neon)]
+    Cliente --> Acceso[Better Auth]
+    Acceso --> Reserva[Server Action de reserva]
+    Reserva --> Validacion[Zod, permisos y disponibilidad actual]
+    Validacion --> Restriccion[Restricción anti-solapamiento]
+    Restriccion --> Neon
+    Neon --> Correo[Resend, si está configurado]
+    Negocio[Equipo del negocio] --> Panel[Panel privado]
+    Panel --> Neon
+```
+
 - La disponibilidad se consulta en `/api/availability` y se vuelve a validar en el servidor al solicitar una cita.
 - PostgreSQL aplica una restricción de exclusión para que dos solicitudes simultáneas no reserven el mismo horario del profesional. La migración personalizada está en `drizzle/`.
 - Las acciones que modifican datos comprueban la sesión y que la persona tenga acceso al negocio o a la cita.
@@ -87,22 +126,27 @@ Los clientes pueden reportar pagos manuales por SINPE Móvil con monto y referen
 
 ## Comandos útiles
 
-| Comando                | Uso                                             |
-| ---------------------- | ----------------------------------------------- |
-| `npm run dev`          | Servidor local de desarrollo                    |
-| `npm run build`        | Compilación de producción                       |
-| `npm run start`        | Servidor de producción local                    |
-| `npm run lint`         | Revisión de ESLint                              |
-| `npm run typecheck`    | Comprobación de TypeScript                      |
-| `npm test`             | Ejecutar las pruebas unitarias                  |
-| `npm run format`       | Formatear archivos con Prettier                 |
-| `npm run format:check` | Verificar formato                               |
-| `npm run db:generate`  | Generar una migración desde el esquema          |
-| `npm run db:migrate`   | Aplicar migraciones pendientes                  |
-| `npm run db:studio`    | Abrir Drizzle Studio                            |
-| `npm run test:db`      | Probar la concurrencia en una rama Neon aislada |
+| Comando                | Uso                                                                     |
+| ---------------------- | ----------------------------------------------------------------------- |
+| `npm run dev`          | Servidor local de desarrollo                                            |
+| `npm run build`        | Compilación de producción                                               |
+| `npm run start`        | Servidor de producción local                                            |
+| `npm run lint`         | Revisión de ESLint                                                      |
+| `npm run typecheck`    | Comprobación de TypeScript                                              |
+| `npm test`             | Ejecutar las pruebas unitarias                                          |
+| `npm run test:e2e`     | Probar páginas públicas y formularios en Chromium de escritorio y móvil |
+| `npm run format`       | Formatear archivos con Prettier                                         |
+| `npm run format:check` | Verificar formato                                                       |
+| `npm run db:generate`  | Generar una migración desde el esquema                                  |
+| `npm run db:migrate`   | Aplicar migraciones pendientes                                          |
+| `npm run db:studio`    | Abrir Drizzle Studio                                                    |
+| `npm run test:db`      | Probar la concurrencia en una rama Neon aislada                         |
 
 La prueba `test:db` requiere `DATABASE_TEST_URL` en `.env.local`, con una rama de Neon separada de `DATABASE_URL` y las migraciones aplicadas. Comprueba que PostgreSQL permita solo una de dos reservas simultáneas para el mismo profesional y horario, y elimina sus registros al terminar. No la ejecutes contra la rama con datos reales.
+
+Las pruebas de navegador verifican navegación, etiquetas accesibles, validación local de acceso y desbordamiento horizontal en escritorios y móviles. La prueba completa de reserva con datos reales debe usar una rama Neon exclusiva para pruebas.
+
+La primera vez, instala el navegador de pruebas con `npx playwright install chromium`.
 
 ## Variables de entorno
 
