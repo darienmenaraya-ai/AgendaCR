@@ -266,7 +266,7 @@ Se agrega con una **migración SQL personalizada** (`drizzle-kit generate --cust
 - [x] Sin secretos en el repositorio
 - [x] Pruebas de la lógica de disponibilidad
 - [x] Prueba de concurrencia: dos reservas simultáneas del mismo horario, solo una gana
-- [ ] Prueba end-to-end del flujo completo de reserva (Playwright)
+- [x] Prueba end-to-end del flujo completo de reserva (Playwright)
 - [ ] Accesibilidad básica (teclado, contraste, etiquetas)
 - [ ] Diseño responsive revisado en móvil
 

@@ -4,6 +4,7 @@ const baseURL = "http://localhost:3000";
 
 export default defineConfig({
   testDir: "./tests/e2e",
+  testIgnore: ["**/booking/**"],
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: 0,

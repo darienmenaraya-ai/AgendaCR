@@ -28,7 +28,9 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    "**/*.mts",
+    ".next-booking-e2e/types/**/*.ts",
+    ".next-booking-e2e/dev/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

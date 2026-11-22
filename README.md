@@ -126,23 +126,26 @@ flowchart TD
 
 ## Comandos útiles
 
-| Comando                | Uso                                                                     |
-| ---------------------- | ----------------------------------------------------------------------- |
-| `npm run dev`          | Servidor local de desarrollo                                            |
-| `npm run build`        | Compilación de producción                                               |
-| `npm run start`        | Servidor de producción local                                            |
-| `npm run lint`         | Revisión de ESLint                                                      |
-| `npm run typecheck`    | Comprobación de TypeScript                                              |
-| `npm test`             | Ejecutar las pruebas unitarias                                          |
-| `npm run test:e2e`     | Probar páginas públicas y formularios en Chromium de escritorio y móvil |
-| `npm run format`       | Formatear archivos con Prettier                                         |
-| `npm run format:check` | Verificar formato                                                       |
-| `npm run db:generate`  | Generar una migración desde el esquema                                  |
-| `npm run db:migrate`   | Aplicar migraciones pendientes                                          |
-| `npm run db:studio`    | Abrir Drizzle Studio                                                    |
-| `npm run test:db`      | Probar la concurrencia en una rama Neon aislada                         |
+| Comando                    | Uso                                                                     |
+| -------------------------- | ----------------------------------------------------------------------- |
+| `npm run dev`              | Servidor local de desarrollo                                            |
+| `npm run build`            | Compilación de producción                                               |
+| `npm run start`            | Servidor de producción local                                            |
+| `npm run lint`             | Revisión de ESLint                                                      |
+| `npm run typecheck`        | Comprobación de TypeScript                                              |
+| `npm test`                 | Ejecutar las pruebas unitarias                                          |
+| `npm run test:e2e`         | Probar páginas públicas y formularios en Chromium de escritorio y móvil |
+| `npm run test:e2e:booking` | Probar registro y reserva completa usando solo la rama Neon de pruebas  |
+| `npm run format`           | Formatear archivos con Prettier                                         |
+| `npm run format:check`     | Verificar formato                                                       |
+| `npm run db:generate`      | Generar una migración desde el esquema                                  |
+| `npm run db:migrate`       | Aplicar migraciones pendientes                                          |
+| `npm run db:studio`        | Abrir Drizzle Studio                                                    |
+| `npm run test:db`          | Probar la concurrencia en una rama Neon aislada                         |
 
 La prueba `test:db` requiere `DATABASE_TEST_URL` en `.env.local`, con una rama de Neon separada de `DATABASE_URL` y las migraciones aplicadas. Comprueba que PostgreSQL permita solo una de dos reservas simultáneas para el mismo profesional y horario, y elimina sus registros al terminar. No la ejecutes contra la rama con datos reales.
+
+La prueba `test:e2e:booking` también requiere `DATABASE_TEST_URL` y valida el flujo desde el registro hasta la creación de una cita. Crea y borra un negocio, una cuenta y una cita temporales en esa rama. El comando se detiene si detecta que la rama de pruebas y la principal tienen el mismo host. No forma parte del CI porque depende de esa base de datos aislada.
 
 Las pruebas de navegador verifican navegación, etiquetas accesibles, validación local de acceso y desbordamiento horizontal en escritorios y móviles. La prueba completa de reserva con datos reales debe usar una rama Neon exclusiva para pruebas.
 
