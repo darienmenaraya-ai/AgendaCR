@@ -32,7 +32,7 @@ export function BusinessForm() {
       <label className="block space-y-2 text-sm font-medium">
         <span>
           WhatsApp{" "}
-          <span className="font-normal text-[#8a9892]">(opcional)</span>
+          <span className="font-normal text-[#52645d]">(opcional)</span>
         </span>
         <input
           autoComplete="tel"
@@ -46,7 +46,7 @@ export function BusinessForm() {
       <label className="block space-y-2 text-sm font-medium">
         <span>
           Teléfono de contacto{" "}
-          <span className="font-normal text-[#8a9892]">(opcional)</span>
+          <span className="font-normal text-[#52645d]">(opcional)</span>
         </span>
         <input
           autoComplete="tel"

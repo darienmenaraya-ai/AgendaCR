@@ -34,14 +34,14 @@ export function BusinessPaymentManager({
               <span className="text-sm font-semibold text-[#172b27]">
                 {currencyFormatter.format(payment.amountCrc)}
               </span>
-              <span className="text-xs text-[#71817c]">
+              <span className="text-xs text-[#52645d]">
                 {statusLabels[payment.status]}
               </span>
             </div>
             <p className="mt-1 break-all text-xs text-[#52645d]">
               Referencia: {payment.reference}
             </p>
-            <p className="mt-1 text-xs text-[#829089]">
+            <p className="mt-1 text-xs text-[#52645d]">
               Reportado por {payment.reporterName} ·{" "}
               {new Intl.DateTimeFormat("es-CR", {
                 dateStyle: "medium",

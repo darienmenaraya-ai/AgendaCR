@@ -227,7 +227,7 @@ Se agrega con una **migración SQL personalizada** (`drizzle-kit generate --cust
 - [x] Reservar, ver y cancelar citas
 
 ### Fase 2: producto competitivo
-- [x] Motor de disponibilidad + restricción anti-solapamiento (migración lista; falta verificar en Neon)
+- [x] Motor de disponibilidad + restricción anti-solapamiento (migración aplicada y verificada en Neon)
 - [x] Pruebas unitarias del motor de disponibilidad
 - [x] Prueba de concurrencia real contra PostgreSQL/Neon
 - [x] Varios empleados con agenda propia
@@ -267,8 +267,8 @@ Se agrega con una **migración SQL personalizada** (`drizzle-kit generate --cust
 - [x] Pruebas de la lógica de disponibilidad
 - [x] Prueba de concurrencia: dos reservas simultáneas del mismo horario, solo una gana
 - [x] Prueba end-to-end del flujo completo de reserva (Playwright)
-- [ ] Accesibilidad básica (teclado, contraste, etiquetas)
-- [ ] Diseño responsive revisado en móvil
+- [x] Accesibilidad básica (teclado, contraste, etiquetas)
+- [x] Diseño responsive revisado en móvil (páginas públicas, acceso, reservas y panel a 320 px)
 
 ---
 

@@ -51,7 +51,7 @@ export function TeamManager({
             Profesionales
           </h2>
         </div>
-        <p className="text-sm text-[#71817c]">
+        <p className="text-sm text-[#52645d]">
           {team.filter((member) => member.active).length} en el equipo
         </p>
       </div>
@@ -64,7 +64,7 @@ export function TeamManager({
           >
             <div className="flex flex-wrap items-center justify-between gap-3">
               <p className="text-sm font-semibold">{member.displayName}</p>
-              <p className="mt-1 text-xs text-[#71817c]">{member.email}</p>
+              <p className="mt-1 text-xs text-[#52645d]">{member.email}</p>
             </div>
             <span className="rounded-full bg-[#edf7ef] px-2.5 py-1 text-[11px] font-semibold text-[#34735e]">
               {member.isOwner
@@ -94,7 +94,7 @@ export function TeamManager({
               >
                 <div>
                   <p className="text-sm font-semibold">{invitation.email}</p>
-                  <p className="mt-1 text-xs text-[#8a785e]">
+                  <p className="mt-1 text-xs text-[#755a37]">
                     Vence{" "}
                     {new Intl.DateTimeFormat("es-CR", {
                       dateStyle: "medium",
@@ -113,7 +113,7 @@ export function TeamManager({
 
       <div className="mt-6 border-t border-[#edf1ed] pt-6">
         <h3 className="font-semibold">Invitar a un profesional</h3>
-        <p className="mt-1 text-sm leading-6 text-[#71817c]">
+        <p className="mt-1 text-sm leading-6 text-[#52645d]">
           Enviaremos un enlace de un solo uso al correo indicado. Vence en siete
           días; también puedes copiarlo para compartirlo directamente.
         </p>

@@ -21,7 +21,7 @@ export default function ErrorPage({
         >
           No pudimos cargar esta página
         </h1>
-        <p className="mt-3 text-sm leading-6 text-[#71817c]">
+        <p className="mt-3 text-sm leading-6 text-[#52645d]">
           Inténtalo de nuevo. Si el problema continúa, vuelve más tarde.
         </p>
         <button

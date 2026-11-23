@@ -31,7 +31,7 @@ export function ClientPaymentManager({
       <h3 className="text-sm font-semibold text-[#35554c]">
         Pagos por SINPE Móvil
       </h3>
-      <p className="mt-1 text-xs leading-5 text-[#71817c]">
+      <p className="mt-1 text-xs leading-5 text-[#52645d]">
         Envía el dinero desde tu aplicación bancaria y reporta aquí el monto y
         la referencia. El negocio debe verificar el pago.
       </p>
@@ -44,14 +44,14 @@ export function ClientPaymentManager({
                 <span className="font-semibold text-[#35554c]">
                   {currencyFormatter.format(payment.amountCrc)}
                 </span>
-                <span className="text-[#71817c]">
+                <span className="text-[#52645d]">
                   {statusLabels[payment.status]}
                 </span>
               </div>
-              <p className="mt-1 break-all text-[#71817c]">
+              <p className="mt-1 break-all text-[#52645d]">
                 Referencia: {payment.reference}
               </p>
-              <p className="mt-1 text-[#829089]">
+              <p className="mt-1 text-[#52645d]">
                 Reportado el{" "}
                 {new Intl.DateTimeFormat("es-CR", {
                   dateStyle: "medium",

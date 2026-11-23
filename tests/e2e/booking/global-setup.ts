@@ -32,6 +32,10 @@ export default async function globalSetup() {
   }
 
   const sql = neon(databaseUrl);
+  const rateLimitSnapshot = await sql`
+    SELECT key, count, last_request FROM rate_limit
+  `;
+  await sql`DELETE FROM rate_limit`;
   const runId = randomUUID();
   const fixture: BookingFixture = {
     businessId: randomUUID(),
@@ -80,19 +84,51 @@ export default async function globalSetup() {
   }
 
   return async () => {
-    await cleanFixture(databaseUrl, fixture);
-    await import("node:fs/promises").then(({ rm }) =>
-      rm(fixturePath, { force: true }),
-    );
+    try {
+      await cleanFixture(databaseUrl, fixture);
+    } finally {
+      const currentSql = neon(databaseUrl);
+      const previousByKey = new Map(
+        rateLimitSnapshot.map((row) => [row.key, row]),
+      );
+      const currentCounters = await currentSql`SELECT key FROM rate_limit`;
+
+      for (const counter of currentCounters) {
+        const previous = previousByKey.get(counter.key);
+        if (previous) {
+          await currentSql`
+            UPDATE rate_limit
+            SET count = ${previous.count}, last_request = ${previous.last_request}
+            WHERE key = ${counter.key}
+          `;
+        } else {
+          await currentSql`DELETE FROM rate_limit WHERE key = ${counter.key}`;
+        }
+      }
+
+      for (const previous of rateLimitSnapshot) {
+        await currentSql`
+          INSERT INTO rate_limit (key, count, last_request)
+          VALUES (${previous.key}, ${previous.count}, ${previous.last_request})
+          ON CONFLICT (key) DO UPDATE SET
+            count = EXCLUDED.count,
+            last_request = EXCLUDED.last_request
+        `;
+      }
+
+      await import("node:fs/promises").then(({ rm }) =>
+        rm(fixturePath, { force: true }),
+      );
+    }
   };
 }
 
 async function cleanFixture(databaseUrl: string, fixture: BookingFixture) {
   const sql = neon(databaseUrl);
   await sql`DELETE FROM appointments WHERE business_id = ${fixture.businessId}`;
-  await sql`DELETE FROM users WHERE email = ${fixture.clientEmail}`;
   await sql`DELETE FROM staff_services WHERE business_id = ${fixture.businessId}`;
   await sql`DELETE FROM businesses WHERE id = ${fixture.businessId}`;
+  await sql`DELETE FROM users WHERE email = ${fixture.clientEmail}`;
   await sql`DELETE FROM users WHERE id = ${fixture.ownerId}`;
 }
 

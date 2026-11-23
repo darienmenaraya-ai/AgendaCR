@@ -63,3 +63,19 @@ body {
   --fc-breezy-event: #34735e;
   --fc-breezy-now: #d28c35;
 }
+
+@media (max-width: 639px) {
+  .calendar-shell .calendar-list-event-inner {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+
+  .calendar-shell .calendar-list-event-title {
+    display: block;
+    overflow-wrap: break-word;
+    white-space: normal;
+  }
+}

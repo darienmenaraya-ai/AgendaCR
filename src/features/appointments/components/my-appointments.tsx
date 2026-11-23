@@ -41,7 +41,7 @@ export function MyAppointments({
       </div>
 
       {appointments.length === 0 ? (
-        <p className="mt-5 rounded-xl bg-[#f7f9f6] p-4 text-sm text-[#71817c]">
+        <p className="mt-5 rounded-xl bg-[#f7f9f6] p-4 text-sm text-[#52645d]">
           Todavía no tienes citas. Puedes reservar desde la página pública de un
           negocio.
         </p>
@@ -76,13 +76,13 @@ export function MyAppointments({
                     <p className="mt-1 text-sm text-[#52645d]">
                       {startsAt} – {endsAt}
                     </p>
-                    <p className="mt-1 text-xs text-[#829089]">
+                    <p className="mt-1 text-xs text-[#52645d]">
                       {appointment.businessName} ·{" "}
                       {appointment.professionalName}
                     </p>
                   </div>
                   <span
-                    className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${appointment.status === "pending" ? "bg-[#fff5e8] text-[#99621f]" : appointment.status === "confirmed" ? "bg-[#edf7ef] text-[#34735e]" : "bg-[#f1f2f1] text-[#7b8782]"}`}
+                    className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${appointment.status === "pending" ? "bg-[#fff5e8] text-[#99621f]" : appointment.status === "confirmed" ? "bg-[#edf7ef] text-[#34735e]" : "bg-[#f1f2f1] text-[#52645d]"}`}
                   >
                     {labels[appointment.status]}
                   </span>
@@ -91,7 +91,7 @@ export function MyAppointments({
                   <ClientCancelButton appointmentId={appointment.id} />
                 ) : appointment.status === "pending" ||
                   appointment.status === "confirmed" ? (
-                  <p className="mt-4 text-xs text-[#829089]">
+                  <p className="mt-4 text-xs text-[#52645d]">
                     La cancelación en línea está disponible hasta 2 horas antes.
                   </p>
                 ) : null}

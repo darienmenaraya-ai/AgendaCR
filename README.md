@@ -124,6 +124,8 @@ flowchart TD
 - El recordatorio automático se ejecuta cada hora en Vercel y busca citas confirmadas para dentro de 24 horas. Configura `CRON_SECRET` en Vercel para proteger el endpoint del cron.
 - La verificación de correo todavía no está habilitada. Para enviar invitaciones, configura `RESEND_API_KEY` y `RESEND_FROM_EMAIL`; si faltan, el enlace sigue disponible para compartir manualmente.
 
+- El texto secundario del tema mantiene contraste suficiente sobre superficies claras, los cambios de disponibilidad se anuncian a lectores de pantalla y el calendario usa una lista semanal en pantallas estrechas.
+
 ## Comandos útiles
 
 | Comando                    | Uso                                                                     |
@@ -147,7 +149,7 @@ La prueba `test:db` requiere `DATABASE_TEST_URL` en `.env.local`, con una rama d
 
 La prueba `test:e2e:booking` también requiere `DATABASE_TEST_URL` y valida el flujo desde el registro hasta la creación de una cita. Crea y borra un negocio, una cuenta y una cita temporales en esa rama. El comando se detiene si detecta que la rama de pruebas y la principal tienen el mismo host. No forma parte del CI porque depende de esa base de datos aislada.
 
-Las pruebas de navegador verifican navegación, etiquetas accesibles, validación local de acceso y desbordamiento horizontal en escritorios y móviles. La prueba completa de reserva con datos reales debe usar una rama Neon exclusiva para pruebas.
+Las pruebas de navegador verifican navegación, etiquetas accesibles, validación local de acceso y desbordamiento horizontal en escritorios y móviles. El flujo aislado de reserva también revisa a 320 px el panel del negocio y la vista de lista del calendario. La prueba completa de reserva con datos reales debe usar una rama Neon exclusiva para pruebas.
 
 La primera vez, instala el navegador de pruebas con `npx playwright install chromium`.
 

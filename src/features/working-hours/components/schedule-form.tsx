@@ -51,7 +51,7 @@ export function ScheduleForm({
         <h2 className="mt-2 text-2xl font-semibold tracking-tight">
           Horario de {professionalName}
         </h2>
-        <p className="mt-2 text-sm leading-6 text-[#71817c]">
+        <p className="mt-2 text-sm leading-6 text-[#52645d]">
           Configura un bloque de atención por día. Los espacios que se muestren
           a los clientes respetarán el horario de cada profesional.
         </p>
@@ -77,7 +77,7 @@ export function ScheduleForm({
                   />
                   {weekday}
                 </label>
-                <label className="flex items-center gap-2 text-xs text-[#71817c]">
+                <label className="flex items-center gap-2 text-xs text-[#52645d]">
                   <span className="w-12">Abre</span>
                   <input
                     aria-label={`${weekday}: hora de apertura`}
@@ -87,7 +87,7 @@ export function ScheduleForm({
                     type="time"
                   />
                 </label>
-                <label className="flex items-center gap-2 text-xs text-[#71817c]">
+                <label className="flex items-center gap-2 text-xs text-[#52645d]">
                   <span className="w-12">Cierra</span>
                   <input
                     aria-label={`${weekday}: hora de cierre`}

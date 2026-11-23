@@ -42,7 +42,7 @@ export function ServiceManager({ businessId, services }: ServiceManagerProps) {
             Lo que ofreces
           </h2>
         </div>
-        <p className="text-sm text-[#71817c]">
+        <p className="text-sm text-[#52645d]">
           {activeCount} {activeCount === 1 ? "activo" : "activos"}
         </p>
       </div>
@@ -89,7 +89,7 @@ function ServiceEditor({
         <div className="flex min-w-0 items-center gap-2">
           <h3 className="truncate font-semibold">{service.name}</h3>
           <span
-            className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold ${service.active ? "bg-[#edf7ef] text-[#34735e]" : "bg-[#f1f2f1] text-[#7b8782]"}`}
+            className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold ${service.active ? "bg-[#edf7ef] text-[#34735e]" : "bg-[#f1f2f1] text-[#52645d]"}`}
           >
             {service.active ? "Activo" : "Inactivo"}
           </span>
@@ -216,7 +216,7 @@ function ServiceFields({
       )}
       <div className="flex flex-wrap items-center justify-between gap-3">
         {service && (
-          <p className="text-xs text-[#829089]">
+          <p className="text-xs text-[#52645d]">
             {service.durationMinutes} min ·{" "}
             {priceFormatter.format(service.priceCrc)}
           </p>

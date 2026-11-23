@@ -32,7 +32,7 @@ export function DashboardMetrics({ businesses }: DashboardMetricsProps) {
         >
           Así va tu agenda
         </h2>
-        <p className="mt-1 text-sm text-[#71817c]">
+        <p className="mt-1 text-sm text-[#52645d]">
           Actividad actual y de los últimos 30 días.
         </p>
       </div>
@@ -69,7 +69,7 @@ export function DashboardMetrics({ businesses }: DashboardMetricsProps) {
           </section>
         ))}
       </div>
-      <p className="mt-3 text-xs text-[#829089]">
+      <p className="mt-3 text-xs text-[#52645d]">
         El valor de servicios no representa pagos recibidos; los pagos se
         incorporarán en una fase posterior.
       </p>
@@ -80,7 +80,7 @@ export function DashboardMetrics({ businesses }: DashboardMetricsProps) {
 function Metric({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl border border-[#e2eae4] bg-white p-5 shadow-sm">
-      <dt className="text-xs font-medium text-[#71817c]">{label}</dt>
+      <dt className="text-xs font-medium text-[#52645d]">{label}</dt>
       <dd className="mt-2 text-2xl font-semibold tabular-nums text-[#172b27]">
         {value}
       </dd>

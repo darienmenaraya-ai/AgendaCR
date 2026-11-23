@@ -180,13 +180,23 @@ export function BookingForm({
       <fieldset aria-busy={isLoadingSlots}>
         <legend className="text-sm font-medium">Horarios disponibles</legend>
         {isLoadingSlots ? (
-          <p className="mt-3 text-sm text-[#71817c]">Buscando espacios…</p>
+          <p
+            aria-live="polite"
+            className="mt-3 text-sm text-[#52645d]"
+            role="status"
+          >
+            Buscando espacios…
+          </p>
         ) : availabilityError ? (
           <p className="mt-3 text-sm text-red-700" role="alert">
             {availabilityError}
           </p>
         ) : slots.length === 0 ? (
-          <p className="mt-3 text-sm text-[#71817c]">
+          <p
+            aria-live="polite"
+            className="mt-3 text-sm text-[#52645d]"
+            role="status"
+          >
             No hay espacios disponibles para este día. Prueba con otra fecha.
           </p>
         ) : (
@@ -214,7 +224,7 @@ export function BookingForm({
                       minute: "2-digit",
                     }).format(new Date(slot.startsAt))}
                   </span>
-                  <span className="mt-1 block truncate text-xs text-[#829089]">
+                  <span className="mt-1 block truncate text-xs text-[#52645d]">
                     {slot.staffName}
                   </span>
                 </label>
@@ -227,7 +237,7 @@ export function BookingForm({
       <label className="block space-y-2 text-sm font-medium">
         <span>
           Nota para el negocio{" "}
-          <span className="font-normal text-[#8a9892]">(opcional)</span>
+          <span className="font-normal text-[#52645d]">(opcional)</span>
         </span>
         <textarea
           className="auth-input h-24 resize-y py-3"
@@ -257,7 +267,7 @@ export function BookingForm({
             ? `Solicitar cita · ${currency.format(selectedService.priceCrc)}`
             : "Solicitar cita"}
       </button>
-      <p className="text-center text-xs leading-5 text-[#8a9892]">
+      <p className="text-center text-xs leading-5 text-[#52645d]">
         La solicitud queda pendiente hasta que el negocio confirme tu cita.
       </p>
     </form>

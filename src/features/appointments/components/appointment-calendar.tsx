@@ -1,6 +1,7 @@
 "use client";
 
 import FullCalendar from "@fullcalendar/react";
+import type { CalendarRef } from "@fullcalendar/react";
 import breezyThemePlugin from "@fullcalendar/react/themes/breezy";
 import dayGridPlugin from "@fullcalendar/react/daygrid";
 import interactionPlugin from "@fullcalendar/react/interaction";
@@ -8,7 +9,7 @@ import listPlugin from "@fullcalendar/react/list";
 import timeGridPlugin from "@fullcalendar/react/timegrid";
 import spanishLocale from "@fullcalendar/react/locales/es";
 import type { EventInput, EventSourceFuncInfo } from "@fullcalendar/react";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { z } from "zod";
 
 import {
@@ -45,13 +46,36 @@ export function AppointmentCalendar({
   staffId?: string;
   timeZone: string;
 }) {
+  const calendarRef = useRef<CalendarRef | null>(null);
+  const [isCompact, setIsCompact] = useState(false);
   const [selectedAppointment, setSelectedAppointment] =
     useState<AppointmentCalendarEvent | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const appointmentsById = useRef(new Map<string, AppointmentCalendarEvent>());
 
+  useEffect(() => {
+    const compactViewport = window.matchMedia("(max-width: 639px)");
+    const updateViewport = () => setIsCompact(compactViewport.matches);
+
+    updateViewport();
+    compactViewport.addEventListener("change", updateViewport);
+    return () => compactViewport.removeEventListener("change", updateViewport);
+  }, []);
+
+  useEffect(() => {
+    const calendar = calendarRef.current?.getApi();
+    if (!calendar) return;
+
+    const preferredView = isCompact ? "listWeek" : "timeGridWeek";
+    if (calendar.view.type !== preferredView) {
+      calendar.changeView(preferredView);
+    }
+  }, [isCompact]);
+
   const loadEvents = useCallback(
     async (fetchInfo: EventSourceFuncInfo): Promise<EventInput[]> => {
+      if (typeof window === "undefined") return [];
+
       const params = new URLSearchParams({
         businessId,
         start: fetchInfo.startStr,
@@ -81,7 +105,9 @@ export function AppointmentCalendar({
           (appointment) =>
             ({
               id: appointment.id,
-              title: `${appointment.serviceName} · ${appointment.clientName}`,
+              title: isCompact
+                ? appointment.serviceName
+                : `${appointment.serviceName} · ${appointment.clientName}`,
               start: appointment.start,
               end: appointment.end,
               color: statusColors[appointment.status],
@@ -96,7 +122,7 @@ export function AppointmentCalendar({
         throw error;
       }
     },
-    [businessId, staffId],
+    [businessId, isCompact, staffId],
   );
 
   return (
@@ -115,13 +141,13 @@ export function AppointmentCalendar({
           >
             Calendario de {businessName}
           </h2>
-          <p className="mt-1 text-sm text-[#71817c]">
+          <p className="mt-1 text-sm text-[#52645d]">
             Horarios mostrados según la zona horaria del negocio.
           </p>
         </div>
-        <div aria-label="Estados de las citas" className="flex flex-wrap gap-3">
+        <ul aria-label="Estados de las citas" className="flex flex-wrap gap-3">
           {Object.entries(statusLabels).map(([status, label]) => (
-            <span
+            <li
               className="inline-flex items-center gap-1.5 text-xs text-[#52645d]"
               key={status}
             >
@@ -134,9 +160,9 @@ export function AppointmentCalendar({
                 }}
               />
               {label}
-            </span>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
 
       {loadError && (
@@ -150,6 +176,7 @@ export function AppointmentCalendar({
 
       <div className="calendar-shell">
         <FullCalendar
+          ref={calendarRef}
           allDaySlot={false}
           dayMaxEvents={3}
           dateClick={(info) =>
@@ -160,15 +187,19 @@ export function AppointmentCalendar({
             setSelectedAppointment(appointment ?? null);
           }}
           events={loadEvents}
+          eventInteractive
           expandRows
           firstDay={1}
+          headingLevel={3}
           height="auto"
           headerToolbar={{
-            left: "prev,next today",
+            left: isCompact ? "prev,next" : "prev,next today",
             center: "title",
-            right: "dayGridMonth,timeGridWeek,listWeek",
+            right: isCompact ? "today" : "dayGridMonth,timeGridWeek,listWeek",
           }}
-          initialView="timeGridWeek"
+          initialView={isCompact ? "listWeek" : "timeGridWeek"}
+          listItemEventInnerClass="calendar-list-event-inner"
+          listItemEventTitleClass="calendar-list-event-title"
           locale={spanishLocale}
           nowIndicator
           plugins={[
@@ -179,6 +210,7 @@ export function AppointmentCalendar({
             interactionPlugin,
           ]}
           slotDuration="00:15:00"
+          titleFormat={{ day: "numeric", month: "short", year: "numeric" }}
           timeZone={timeZone}
         />
       </div>
@@ -227,13 +259,13 @@ function AppointmentDetails({
       </div>
       <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
         <div>
-          <dt className="text-xs text-[#71817c]">Cliente</dt>
+          <dt className="text-xs text-[#52645d]">Cliente</dt>
           <dd className="mt-1 font-medium text-[#35554c]">
             {appointment.clientName}
           </dd>
         </div>
         <div>
-          <dt className="text-xs text-[#71817c]">Profesional</dt>
+          <dt className="text-xs text-[#52645d]">Profesional</dt>
           <dd className="mt-1 font-medium text-[#35554c]">
             {appointment.professionalName}
           </dd>

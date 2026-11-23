@@ -46,7 +46,7 @@ export function TimeOffManager({
         <h2 className="mt-2 text-2xl font-semibold tracking-tight">
           Ausencias de {professionalName}
         </h2>
-        <p className="mt-2 text-sm leading-6 text-[#71817c]">
+        <p className="mt-2 text-sm leading-6 text-[#52645d]">
           El período se interpreta en la zona horaria del negocio. No se puede
           guardar si coincide con citas que ya estén pendientes o confirmadas.
         </p>
@@ -72,9 +72,9 @@ export function TimeOffManager({
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="block space-y-2 text-sm font-medium">
             <span>Desde</span>
-            <div className="grid grid-cols-[1fr_0.8fr] gap-2">
+            <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)] gap-2">
               <input
-                className="auth-input"
+                className="auth-input min-w-0"
                 defaultValue={today}
                 min={today}
                 name="startDate"
@@ -83,7 +83,7 @@ export function TimeOffManager({
               />
               <input
                 aria-label="Hora de inicio de la ausencia"
-                className="auth-input"
+                className="auth-input min-w-0"
                 defaultValue="09:00"
                 name="startTime"
                 required
@@ -93,9 +93,9 @@ export function TimeOffManager({
           </label>
           <label className="block space-y-2 text-sm font-medium">
             <span>Hasta</span>
-            <div className="grid grid-cols-[1fr_0.8fr] gap-2">
+            <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)] gap-2">
               <input
-                className="auth-input"
+                className="auth-input min-w-0"
                 defaultValue={today}
                 min={today}
                 name="endDate"
@@ -104,7 +104,7 @@ export function TimeOffManager({
               />
               <input
                 aria-label="Hora de finalización de la ausencia"
-                className="auth-input"
+                className="auth-input min-w-0"
                 defaultValue="17:00"
                 name="endTime"
                 required
@@ -116,7 +116,7 @@ export function TimeOffManager({
         <label className="mt-4 block space-y-2 text-sm font-medium">
           <span>
             Motivo{" "}
-            <span className="font-normal text-[#8a9892]">(opcional)</span>
+            <span className="font-normal text-[#52645d]">(opcional)</span>
           </span>
           <input
             className="auth-input"
@@ -185,7 +185,7 @@ function AbsenceCard({
           {formatter.format(absence.endsAt)}
         </p>
         {absence.reason && (
-          <p className="mt-1 text-xs text-[#71817c]">{absence.reason}</p>
+          <p className="mt-1 text-xs text-[#52645d]">{absence.reason}</p>
         )}
         {state.error && (
           <p className="mt-2 text-xs text-red-700" role="alert">

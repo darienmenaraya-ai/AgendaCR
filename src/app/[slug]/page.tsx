@@ -162,7 +162,7 @@ async function PublicBusinessContent({ params }: PublicBusinessPageProps) {
           <h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
             {business.name}
           </h1>
-          <p className="mt-4 max-w-lg leading-7 text-[#71817c]">
+          <p className="mt-4 max-w-lg leading-7 text-[#52645d]">
             Escoge el servicio y el horario que mejor se ajuste a tu día. Las
             horas se muestran en la zona horaria del negocio.
           </p>
@@ -185,7 +185,7 @@ async function PublicBusinessContent({ params }: PublicBusinessPageProps) {
           <div className="mt-10">
             <h2 className="text-sm font-semibold">Servicios disponibles</h2>
             {publicServices.length === 0 ? (
-              <p className="mt-3 rounded-xl border border-[#e2eae4] bg-white p-4 text-sm text-[#71817c]">
+              <p className="mt-3 rounded-xl border border-[#e2eae4] bg-white p-4 text-sm text-[#52645d]">
                 Este negocio todavía no ha publicado servicios.
               </p>
             ) : (
@@ -199,7 +199,7 @@ async function PublicBusinessContent({ params }: PublicBusinessPageProps) {
                       <span className="block truncate text-sm font-semibold">
                         {service.name}
                       </span>
-                      <span className="mt-1 block text-xs text-[#829089]">
+                      <span className="mt-1 block text-xs text-[#52645d]">
                         {service.durationMinutes} minutos
                       </span>
                     </span>
@@ -224,7 +224,7 @@ async function PublicBusinessContent({ params }: PublicBusinessPageProps) {
           <h2 className="mt-2 text-2xl font-semibold tracking-tight">
             Solicita una cita
           </h2>
-          <p className="mt-2 text-sm leading-6 text-[#71817c]">
+          <p className="mt-2 text-sm leading-6 text-[#52645d]">
             {publicServices.length === 0
               ? "Este negocio todavía no tiene servicios para reservar."
               : session
@@ -243,7 +243,7 @@ async function PublicBusinessContent({ params }: PublicBusinessPageProps) {
                 />
               </div>
             ) : (
-              <p className="mt-7 rounded-xl border border-[#e2eae4] bg-[#f7f9f6] p-4 text-sm leading-6 text-[#71817c]">
+              <p className="mt-7 rounded-xl border border-[#e2eae4] bg-[#f7f9f6] p-4 text-sm leading-6 text-[#52645d]">
                 Vuelve más adelante o contacta directamente al negocio para
                 consultar sus servicios.
               </p>
@@ -264,14 +264,14 @@ async function PublicBusinessContent({ params }: PublicBusinessPageProps) {
               </Link>
             </div>
           ) : (
-            <p className="mt-7 rounded-xl border border-[#e2eae4] bg-[#f7f9f6] p-4 text-sm leading-6 text-[#71817c]">
+            <p className="mt-7 rounded-xl border border-[#e2eae4] bg-[#f7f9f6] p-4 text-sm leading-6 text-[#52645d]">
               Las reservas estarán disponibles cuando el negocio publique sus
               servicios.
             </p>
           )}
         </section>
       </section>
-      <footer className="mx-auto max-w-6xl px-6 py-7 text-xs text-[#8a9892] sm:px-10">
+      <footer className="mx-auto max-w-6xl px-6 py-7 text-xs text-[#52645d] sm:px-10">
         Reservas organizadas con AgendaCR · Costa Rica
       </footer>
     </main>
@@ -280,7 +280,7 @@ async function PublicBusinessContent({ params }: PublicBusinessPageProps) {
 
 function PublicPageLoading() {
   return (
-    <main className="min-h-screen bg-[#f7f8f5] px-6 py-16 text-[#71817c]">
+    <main className="min-h-screen bg-[#f7f8f5] px-6 py-16 text-[#52645d]">
       Cargando perfil del negocio…
     </main>
   );

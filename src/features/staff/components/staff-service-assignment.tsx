@@ -36,7 +36,7 @@ export function StaffServiceAssignment({
     <div className="mt-4 border-t border-[#edf1ed] pt-4">
       <h4 className="text-sm font-semibold">Servicios de {professionalName}</h4>
       {services.length === 0 ? (
-        <p className="mt-2 text-sm text-[#71817c]">
+        <p className="mt-2 text-sm text-[#52645d]">
           Agrega servicios al negocio para poder asignarlos.
         </p>
       ) : (

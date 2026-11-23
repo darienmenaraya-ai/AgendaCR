@@ -4,6 +4,8 @@ import { defineConfig, devices } from "@playwright/test";
 loadEnv({ path: ".env.local" });
 
 const testDatabaseUrl = process.env.DATABASE_TEST_URL;
+const testPort = process.env.AGENDA_BOOKING_TEST_PORT ?? "3001";
+const testBaseUrl = `http://localhost:${testPort}`;
 const originalApplicationDatabaseUrl =
   process.env.AGENDA_MAIN_DATABASE_URL ?? process.env.DATABASE_URL;
 
@@ -27,7 +29,7 @@ if (originalApplicationDatabaseUrl) {
 
 process.env.AGENDA_MAIN_DATABASE_URL ??= process.env.DATABASE_URL;
 process.env.DATABASE_URL = testDatabaseUrl;
-process.env.BETTER_AUTH_URL = "http://localhost:3001";
+process.env.BETTER_AUTH_URL = testBaseUrl;
 process.env.PLAYWRIGHT_BOOKING_E2E = "1";
 
 export default defineConfig({
@@ -40,12 +42,12 @@ export default defineConfig({
   globalSetup: "./tests/e2e/booking/global-setup.ts",
   use: {
     ...devices["Desktop Chrome"],
-    baseURL: "http://localhost:3001",
+    baseURL: testBaseUrl,
     trace: "retain-on-failure",
   },
   webServer: {
-    command: "npm run dev -- --port 3001",
-    url: "http://localhost:3001",
+    command: `npm run dev -- --port ${testPort}`,
+    url: testBaseUrl,
     reuseExistingServer: false,
     timeout: 120_000,
   },

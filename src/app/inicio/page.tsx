@@ -302,7 +302,7 @@ async function AuthenticatedHome() {
         <h1 className="mt-2 text-4xl font-semibold tracking-tight">
           Hola, {session.user.name.split(" ")[0]}
         </h1>
-        <p className="mt-3 max-w-xl leading-7 text-[#71817c]">
+        <p className="mt-3 max-w-xl leading-7 text-[#52645d]">
           {ownedBusinesses.length === 0
             ? ownStaffMemberships.length > 0
               ? "Aquí puedes revisar tus citas y administrar tu disponibilidad profesional."
@@ -569,7 +569,7 @@ async function AuthenticatedHome() {
           now={currentTime}
         />
 
-        <p className="mt-8 text-sm text-[#8a9892]">
+        <p className="mt-8 text-sm text-[#52645d]">
           Sesión iniciada como{" "}
           <span className="font-medium text-[#52645d]">
             {session.user.email}
@@ -582,7 +582,7 @@ async function AuthenticatedHome() {
 
 function DashboardLoading() {
   return (
-    <main className="min-h-screen bg-[#f7f8f5] px-6 py-16 text-[#71817c] sm:px-10">
+    <main className="min-h-screen bg-[#f7f8f5] px-6 py-16 text-[#52645d] sm:px-10">
       Cargando tu espacio de trabajo…
     </main>
   );

@@ -10,7 +10,7 @@ export default function NotFound() {
         <h1 className="mt-3 text-3xl font-semibold tracking-tight">
           Aquí no hay una agenda
         </h1>
-        <p className="mt-3 text-sm leading-6 text-[#71817c]">
+        <p className="mt-3 text-sm leading-6 text-[#52645d]">
           El enlace puede estar incompleto o la página ya no está disponible.
         </p>
         <Link

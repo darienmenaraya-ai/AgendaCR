@@ -60,7 +60,7 @@ export default function Home() {
               Ya tengo una cuenta
             </Link>
           </div>
-          <div className="mt-9 flex items-center gap-3 text-sm text-[#71817c]">
+          <div className="mt-9 flex items-center gap-3 text-sm text-[#52645d]">
             <span className="flex -space-x-2">
               <span className="grid size-8 place-items-center rounded-full border-2 border-[#f7f8f5] bg-[#f3c9a8] text-[10px] font-semibold text-[#543925]">
                 CR
@@ -79,7 +79,7 @@ export default function Home() {
             <div className="flex items-center justify-between border-b border-[#edf1ed] pb-5">
               <div>
                 <p className="text-sm font-semibold">Agenda de hoy</p>
-                <p className="mt-1 text-xs text-[#8a9892]">
+                <p className="mt-1 text-xs text-[#52645d]">
                   Martes · San José, Costa Rica
                 </p>
               </div>
@@ -108,7 +108,7 @@ export default function Home() {
               />
             </div>
             <div className="mt-5 flex items-center justify-between rounded-2xl bg-[#f6f8f5] px-4 py-3.5">
-              <span className="text-xs font-medium text-[#71817c]">
+              <span className="text-xs font-medium text-[#52645d]">
                 Próxima cita en
               </span>
               <span className="text-sm font-semibold text-[#1e5949]">
@@ -117,7 +117,7 @@ export default function Home() {
             </div>
           </div>
           <div className="absolute -bottom-6 -left-8 hidden rounded-2xl border border-white bg-white px-4 py-3 shadow-xl shadow-[#1e5949]/10 sm:block">
-            <p className="text-[11px] text-[#8a9892]">Citas organizadas</p>
+            <p className="text-[11px] text-[#52645d]">Citas organizadas</p>
             <p className="mt-1 text-lg font-semibold text-[#1e5949]">
               Todo en orden <span aria-hidden="true">✓</span>
             </p>
@@ -144,7 +144,7 @@ export default function Home() {
           />
         </div>
       </section>
-      <footer className="mx-auto flex max-w-7xl justify-between px-6 py-6 text-xs text-[#8a9892] sm:px-10 lg:px-12">
+      <footer className="mx-auto flex max-w-7xl justify-between px-6 py-6 text-xs text-[#52645d] sm:px-10 lg:px-12">
         <span>© 2026 AgendaCR</span>
         <span>Hecho en Costa Rica</span>
       </footer>
@@ -172,12 +172,12 @@ function Appointment({
     <div
       className={`flex items-center gap-4 rounded-xl border-l-[3px] px-3.5 py-3 ${colors[tone]}`}
     >
-      <span className="w-12 text-xs font-semibold text-[#75847e]">{time}</span>
+      <span className="w-12 text-xs font-semibold text-[#52645d]">{time}</span>
       <span className="min-w-0 flex-1">
         <span className="block truncate text-sm font-semibold text-[#30453e]">
           {name}
         </span>
-        <span className="mt-0.5 block text-xs text-[#829089]">{person}</span>
+        <span className="mt-0.5 block text-xs text-[#52645d]">{person}</span>
       </span>
       <span className="size-2 rounded-full bg-[#6eb48a]" />
     </div>
@@ -200,7 +200,7 @@ function Feature({
       </span>
       <div>
         <h2 className="text-sm font-semibold">{title}</h2>
-        <p className="mt-1.5 text-sm leading-6 text-[#71817c]">{text}</p>
+        <p className="mt-1.5 text-sm leading-6 text-[#52645d]">{text}</p>
       </div>
     </article>
   );

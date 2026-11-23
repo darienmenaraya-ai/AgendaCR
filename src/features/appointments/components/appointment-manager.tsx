@@ -81,13 +81,13 @@ export function AppointmentManager({
             Solicitudes de cita
           </h2>
         </div>
-        <p className="text-sm text-[#71817c]">
+        <p className="text-sm text-[#52645d]">
           {pendingCount} {pendingCount === 1 ? "pendiente" : "pendientes"}
         </p>
       </div>
 
       {appointments.length === 0 ? (
-        <p className="mt-5 rounded-xl bg-[#f7f9f6] p-4 text-sm text-[#71817c]">
+        <p className="mt-5 rounded-xl bg-[#f7f9f6] p-4 text-sm text-[#52645d]">
           Cuando tus clientes soliciten una cita, aparecerá aquí.
         </p>
       ) : (
@@ -128,13 +128,13 @@ export function AppointmentManager({
               />
             </label>
           </div>
-          <p aria-live="polite" className="mt-4 text-xs text-[#829089]">
+          <p aria-live="polite" className="mt-4 text-xs text-[#52645d]">
             Mostrando {filteredAppointments.length} de {appointments.length}{" "}
             citas
           </p>
           {filteredAppointments.length === 0 ? (
             <div className="mt-3 rounded-xl border border-dashed border-[#dce5df] p-6 text-center">
-              <p className="text-sm text-[#71817c]">
+              <p className="text-sm text-[#52645d]">
                 No hay citas que coincidan con estos filtros.
               </p>
               <button
@@ -206,12 +206,12 @@ function AppointmentCard({
           </p>
         </div>
         <span
-          className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${appointment.status === "pending" ? "bg-[#fff5e8] text-[#99621f]" : appointment.status === "confirmed" ? "bg-[#edf7ef] text-[#34735e]" : "bg-[#f1f2f1] text-[#7b8782]"}`}
+          className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${appointment.status === "pending" ? "bg-[#fff5e8] text-[#99621f]" : appointment.status === "confirmed" ? "bg-[#edf7ef] text-[#34735e]" : "bg-[#f1f2f1] text-[#52645d]"}`}
         >
           {statusLabels[appointment.status]}
         </span>
       </div>
-      <div className="mt-4 grid gap-2 text-xs text-[#71817c] sm:grid-cols-3">
+      <div className="mt-4 grid gap-2 text-xs text-[#52645d] sm:grid-cols-3">
         <p>
           Cliente:{" "}
           <span className="font-medium text-[#52645d]">

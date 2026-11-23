@@ -145,7 +145,7 @@ export function AuthForm({ mode }: AuthFormProps) {
             <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-[34px]">
               {isSignUp ? "Crea tu cuenta" : "Inicia sesión"}
             </h2>
-            <p className="mt-2 text-sm leading-6 text-[#71817c]">
+            <p className="mt-2 text-sm leading-6 text-[#52645d]">
               {isSignUp
                 ? "Organiza tus citas y dedica más tiempo a tus clientes."
                 : "Ingresa para continuar con tu agenda."}
@@ -210,7 +210,7 @@ export function AuthForm({ mode }: AuthFormProps) {
               </button>
             </form>
 
-            <p className="mt-7 text-center text-sm text-[#71817c]">
+            <p className="mt-7 text-center text-sm text-[#52645d]">
               {isSignUp ? "¿Ya tienes cuenta?" : "¿Primera vez en AgendaCR?"}{" "}
               <Link
                 className="font-semibold text-[#1e5949] hover:underline"
@@ -229,7 +229,7 @@ export function AuthForm({ mode }: AuthFormProps) {
                 {isSignUp ? "Inicia sesión" : "Crea una cuenta"}
               </Link>
             </p>
-            <p className="mt-10 text-center text-xs leading-5 text-[#98a49f]">
+            <p className="mt-10 text-center text-xs leading-5 text-[#52645d]">
               Al continuar, aceptas nuestros términos de servicio y política de
               privacidad.
             </p>

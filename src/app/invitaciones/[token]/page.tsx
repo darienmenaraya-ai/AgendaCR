@@ -80,7 +80,7 @@ async function InvitationContent({ params }: InvitationPageProps) {
         <h1 className="mt-2 text-3xl font-semibold tracking-tight">
           Únete a {invitation.businessName}
         </h1>
-        <p className="mt-3 text-sm leading-6 text-[#71817c]">
+        <p className="mt-3 text-sm leading-6 text-[#52645d]">
           Te invitaron como profesional. La invitación vence el{" "}
           {new Intl.DateTimeFormat("es-CR", { dateStyle: "long" }).format(
             invitation.expiresAt,
@@ -134,7 +134,7 @@ function InvitationUnavailable() {
     <main className="flex min-h-screen items-center justify-center bg-[#f5f7f6] px-4 text-[#172b27]">
       <section className="w-full max-w-md rounded-[24px] border border-[#e2eae4] bg-white p-7 text-center shadow-sm">
         <h1 className="text-2xl font-semibold">Invitación no disponible</h1>
-        <p className="mt-3 text-sm leading-6 text-[#71817c]">
+        <p className="mt-3 text-sm leading-6 text-[#52645d]">
           El enlace venció, fue revocado o ya se utilizó. Pide al propietario
           del negocio que genere uno nuevo.
         </p>
@@ -145,7 +145,7 @@ function InvitationUnavailable() {
 
 function InvitationLoading() {
   return (
-    <main className="min-h-screen bg-[#f5f7f6] px-6 py-16 text-[#71817c]">
+    <main className="min-h-screen bg-[#f5f7f6] px-6 py-16 text-[#52645d]">
       Revisando invitación…
     </main>
   );

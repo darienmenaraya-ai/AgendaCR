@@ -53,7 +53,7 @@ export function InviteStaffForm({ businessId }: { businessId: string }) {
               : "Invitación creada; comparte el enlace"}
           </p>
           {state.emailStatus !== "sent" && (
-            <p className="mt-1 text-xs leading-5 text-[#71817c]">
+            <p className="mt-1 text-xs leading-5 text-[#52645d]">
               {state.emailStatus === "not-configured"
                 ? "Configura Resend para enviar invitaciones automáticamente."
                 : state.emailStatus === "failed"
@@ -76,7 +76,7 @@ export function InviteStaffForm({ businessId }: { businessId: string }) {
               {copied ? "Copiado" : "Copiar enlace"}
             </button>
           </div>
-          <p className="mt-2 text-xs leading-5 text-[#71817c]">
+          <p className="mt-2 text-xs leading-5 text-[#52645d]">
             Este enlace se muestra solo ahora. Si lo pierdes, genera una
             invitación nueva para invalidar el anterior.
           </p>
