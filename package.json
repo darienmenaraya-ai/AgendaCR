@@ -9,6 +9,7 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "email:test": "node scripts/test-resend.mjs",
     "test:db": "vitest run --config vitest.db.config.mts",
     "test:e2e": "playwright test",
     "test:e2e:booking": "playwright test --config playwright.booking.config.ts",

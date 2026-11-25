@@ -121,6 +121,7 @@ flowchart TD
 - Las acciones que modifican datos comprueban la sesión y que la persona tenga acceso al negocio o a la cita.
 - Los intentos de inicio de sesión y registro, las consultas de disponibilidad, las reservas, el calendario administrativo, los reportes de pago y las invitaciones tienen límites compartidos entre instancias, respaldados por Neon.
 - Los servicios se desactivan para conservar el historial relacionado con citas anteriores.
+- `npm run email:test` comprueba la API de Resend con `onboarding@resend.dev` y `delivered@resend.dev`. Es una simulación para desarrollo; no envía mensajes a clientes ni verifica una cuenta real.
 - Las notificaciones de solicitud, confirmación y cancelación de citas usan Resend si se configuran `RESEND_API_KEY` y `RESEND_FROM_EMAIL`. Si faltan, las citas siguen funcionando sin enviar correos.
 - El recordatorio automático se ejecuta cada hora en Vercel y busca citas confirmadas para dentro de 24 horas. Configura `CRON_SECRET` en Vercel para proteger el endpoint del cron.
 - Al configurar `RESEND_API_KEY` y `RESEND_FROM_EMAIL`, Better Auth exige verificar el correo al registrarse y vuelve a solicitar un enlace si una persona intenta iniciar sesión sin verificarlo. El enlace vence en una hora y, al abrirlo, la cuenta inicia sesión automáticamente. Sin las credenciales de Resend, la verificación queda desactivada para que el desarrollo local siga funcionando. Para enviar invitaciones del equipo, configura esas mismas variables; si faltan, el enlace se puede compartir manualmente.
@@ -137,6 +138,7 @@ flowchart TD
 | `npm run lint`             | Revisión de ESLint                                                      |
 | `npm run typecheck`        | Comprobación de TypeScript                                              |
 | `npm test`                 | Ejecutar las pruebas unitarias                                          |
+| `npm run email:test`       | Comprobar Resend con las direcciones de prueba                          |
 | `npm run test:e2e`         | Probar páginas públicas y formularios en Chromium de escritorio y móvil |
 | `npm run test:e2e:booking` | Probar registro y reserva completa usando solo la rama Neon de pruebas  |
 | `npm run format`           | Formatear archivos con Prettier                                         |
