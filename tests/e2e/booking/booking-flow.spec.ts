@@ -28,6 +28,7 @@ test("una persona puede registrarse, elegir un espacio y solicitar una cita", as
   const fixture = JSON.parse(
     await readFile(fixturePath, "utf8"),
   ) as BookingFixture;
+  const sql = neon(process.env.DATABASE_URL!);
 
   await page.goto(
     `/registro?callbackURL=${encodeURIComponent(`/${fixture.slug}`)}`,
@@ -44,6 +45,24 @@ test("una persona puede registrarse, elegir un espacio y solicitar una cita", as
     signupResponse.ok(),
     `El servidor de registro respondió HTTP ${signupResponse.status()}.`,
   ).toBe(true);
+
+  const signupResult = (await signupResponse.json()) as {
+    token: string | null;
+  };
+  if (signupResult.token === null) {
+    await expect(
+      page.getByRole("heading", { name: "Revisa tu correo" }),
+    ).toBeVisible();
+    await sql`
+      UPDATE users SET email_verified = true WHERE email = ${fixture.clientEmail}
+    `;
+    await page.goto(
+      `/iniciar-sesion?callbackURL=${encodeURIComponent(`/${fixture.slug}`)}`,
+    );
+    await page.getByLabel("Correo electrónico").fill(fixture.clientEmail);
+    await page.getByLabel("Contraseña").fill(fixture.clientPassword);
+    await page.getByRole("button", { name: "Entrar a mi cuenta" }).click();
+  }
 
   await expect(page.locator("form p[role='alert']")).toBeHidden({
     timeout: 10_000,
@@ -74,7 +93,6 @@ test("una persona puede registrarse, elegir un espacio y solicitar una cita", as
     page.getByRole("heading", { name: "Solicitud enviada" }),
   ).toBeVisible({ timeout: 15_000 });
 
-  const sql = neon(process.env.DATABASE_URL!);
   const appointments = await sql`
     SELECT id, status
     FROM appointments
@@ -109,7 +127,9 @@ test("una persona puede registrarse, elegir un espacio y solicitar una cita", as
   await expect(page.locator(".calendar-shell [role='alert']")).toBeHidden({
     timeout: 15_000,
   });
-  await page.getByRole("button", { name: "Semana siguiente" }).click();
+  if (isTomorrowInNextCalendarWeek()) {
+    await page.getByRole("button", { name: "Semana siguiente" }).click();
+  }
   const calendarAppointment = page
     .locator(".calendar-shell")
     .getByRole("button", { name: /Servicio de prueba/ });
@@ -135,3 +155,17 @@ test("una persona puede registrarse, elegir un espacio y solicitar una cita", as
     fullPage: true,
   });
 });
+
+function isTomorrowInNextCalendarWeek(): boolean {
+  const dateParts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Costa_Rica",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(new Date());
+  const date = Object.fromEntries(
+    dateParts.map((part) => [part.type, part.value]),
+  );
+  const localDate = `${date.year}-${date.month}-${date.day}`;
+  return new Date(`${localDate}T00:00:00Z`).getUTCDay() === 0;
+}

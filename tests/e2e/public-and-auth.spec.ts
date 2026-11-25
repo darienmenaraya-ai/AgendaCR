@@ -72,3 +72,65 @@ test("las páginas públicas y de acceso no desbordan el ancho de pantalla", asy
     );
   }
 });
+
+test("muestra instrucciones de verificación después del registro", async ({
+  page,
+}) => {
+  await page.route("**/api/auth/sign-up/email", (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        token: null,
+        user: {
+          id: "verification-test-user",
+          name: "Cliente de prueba",
+          email: "verification@example.com",
+          emailVerified: false,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      }),
+    }),
+  );
+
+  await page.goto("/registro");
+  await page.getByLabel("Nombre completo").fill("Cliente de prueba");
+  await page.getByLabel("Correo electrónico").fill("verification@example.com");
+  await page.getByLabel("Contraseña").fill("ClaveSegura123");
+  await page.getByRole("button", { name: "Crear cuenta" }).click();
+
+  await expect(
+    page.getByRole("heading", { name: "Revisa tu correo" }),
+  ).toBeVisible();
+  await expect(page.getByRole("status")).toContainText(
+    "El enlace vence en una hora.",
+  );
+  await expect(
+    page.getByRole("link", { name: "Ir a iniciar sesión" }),
+  ).toHaveAttribute("href", "/iniciar-sesion");
+});
+
+test("explica el enlace nuevo al iniciar sesión con correo sin verificar", async ({
+  page,
+}) => {
+  await page.route("**/api/auth/sign-in/email", (route) =>
+    route.fulfill({
+      status: 403,
+      contentType: "application/json",
+      body: JSON.stringify({
+        code: "EMAIL_NOT_VERIFIED",
+        message: "Email not verified",
+      }),
+    }),
+  );
+
+  await page.goto("/iniciar-sesion");
+  await page.getByLabel("Correo electrónico").fill("verification@example.com");
+  await page.getByLabel("Contraseña").fill("ClaveSegura123");
+  await page.getByRole("button", { name: "Entrar a mi cuenta" }).click();
+
+  await expect(page.locator("form p[role='alert']")).toContainText(
+    "solicitamos un enlace nuevo",
+  );
+});

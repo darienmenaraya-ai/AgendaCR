@@ -1,6 +1,9 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { sendAppointmentRequestNotifications } from "../../src/lib/email";
+import {
+  sendAppointmentRequestNotifications,
+  sendEmailVerificationNotification,
+} from "../../src/lib/email";
 
 const appointmentRequest = {
   appointmentId: "98bb78ec-3450-43e5-840e-f7c318a1187b",
@@ -76,5 +79,44 @@ describe("sendAppointmentRequestNotifications", () => {
       sendAppointmentRequestNotifications(appointmentRequest),
     ).resolves.toBeUndefined();
     expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe("sendEmailVerificationNotification", () => {
+  it("sends a verification link through Resend", async () => {
+    vi.stubEnv("RESEND_API_KEY", "re_test_key");
+    vi.stubEnv("RESEND_FROM_EMAIL", "AgendaCR <citas@example.com>");
+    const fetchMock = vi
+      .fn<typeof fetch>()
+      .mockResolvedValue(new Response(JSON.stringify({ id: "email-id" })));
+    vi.stubGlobal("fetch", fetchMock);
+    const verificationUrl =
+      "https://agenda.example/verify-email?token=secret&callbackURL=%2Finicio";
+
+    await expect(
+      sendEmailVerificationNotification({
+        to: "client@example.com",
+        userName: "María",
+        verificationUrl,
+      }),
+    ).resolves.toBe(true);
+
+    expect(fetchMock).toHaveBeenCalledOnce();
+    const requestInit = fetchMock.mock.calls[0]?.[1];
+    expect(requestInit?.headers).toMatchObject({
+      Authorization: "Bearer re_test_key",
+      "Idempotency-Key": expect.stringMatching(/^auth\/email-verification\//),
+    });
+    const body = JSON.parse(String(requestInit?.body)) as {
+      to: string[];
+      html: string;
+      text: string;
+    };
+    expect(body.to).toEqual(["client@example.com"]);
+    expect(body.html).toContain(
+      'href="https://agenda.example/verify-email?token=secret&amp;callbackURL=%2Finicio"',
+    );
+    expect(body.text).toContain(verificationUrl);
+    expect(body.text).toContain("Este enlace vence en una hora.");
   });
 });

@@ -16,6 +16,7 @@ export function AuthForm({ mode }: AuthFormProps) {
   const isSignUp = mode === "sign-up";
   const [isPending, setIsPending] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [verificationPending, setVerificationPending] = useState(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -68,11 +69,23 @@ export function AuthForm({ mode }: AuthFormProps) {
       }
 
       if (result.error) {
+        if (!isSignUp && result.error.status === 403) {
+          setErrorMessage(
+            "Tu correo todavía no está verificado. Si los datos son correctos, solicitamos un enlace nuevo. Revisa tu bandeja de entrada y spam.",
+          );
+          return;
+        }
+
         setErrorMessage(
           isSignUp
             ? "No pudimos crear la cuenta. Revisa tus datos o prueba con otro correo."
             : "El correo o la contraseña no coinciden. Inténtalo de nuevo.",
         );
+        return;
+      }
+
+      if (isSignUp && result.data?.token === null) {
+        setVerificationPending(true);
         return;
       }
 
@@ -151,84 +164,123 @@ export function AuthForm({ mode }: AuthFormProps) {
                 : "Ingresa para continuar con tu agenda."}
             </p>
 
-            <form className="mt-8 space-y-5" onSubmit={handleSubmit} noValidate>
-              {isSignUp && (
+            {verificationPending && (
+              <div
+                aria-live="polite"
+                className="mt-8 rounded-2xl border border-[#dce8df] bg-[#f7f9f6] p-5"
+                role="status"
+              >
+                <h3 className="font-semibold text-[#172b27]">
+                  Revisa tu correo
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-[#52645d]">
+                  Si podemos usar esa dirección, enviaremos un enlace para
+                  verificarla. Revisa también la carpeta de spam. El enlace
+                  vence en una hora.
+                </p>
+                <p className="mt-3 text-sm leading-6 text-[#52645d]">
+                  Al confirmar el correo, tu cuenta iniciará sesión y podrás
+                  continuar.
+                </p>
+                <Link
+                  className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-[#1e5949] px-5 text-sm font-semibold text-white transition hover:bg-[#17483b] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1e5949]"
+                  href="/iniciar-sesion"
+                >
+                  Ir a iniciar sesión
+                </Link>
+              </div>
+            )}
+
+            {!verificationPending && (
+              <form
+                className="mt-8 space-y-5"
+                onSubmit={handleSubmit}
+                noValidate
+              >
+                {isSignUp && (
+                  <label className="block space-y-2 text-sm font-medium">
+                    <span>Nombre completo</span>
+                    <input
+                      autoComplete="name"
+                      className="auth-input"
+                      name="name"
+                      placeholder="María Rodríguez"
+                      required
+                    />
+                  </label>
+                )}
                 <label className="block space-y-2 text-sm font-medium">
-                  <span>Nombre completo</span>
+                  <span>Correo electrónico</span>
                   <input
-                    autoComplete="name"
+                    autoComplete="email"
                     className="auth-input"
-                    name="name"
-                    placeholder="María Rodríguez"
+                    name="email"
+                    placeholder="tu@correo.com"
                     required
+                    type="email"
                   />
                 </label>
-              )}
-              <label className="block space-y-2 text-sm font-medium">
-                <span>Correo electrónico</span>
-                <input
-                  autoComplete="email"
-                  className="auth-input"
-                  name="email"
-                  placeholder="tu@correo.com"
-                  required
-                  type="email"
-                />
-              </label>
-              <label className="block space-y-2 text-sm font-medium">
-                <span>Contraseña</span>
-                <input
-                  autoComplete={isSignUp ? "new-password" : "current-password"}
-                  className="auth-input"
-                  name="password"
-                  placeholder="Al menos 8 caracteres"
-                  required
-                  type="password"
-                />
-              </label>
+                <label className="block space-y-2 text-sm font-medium">
+                  <span>Contraseña</span>
+                  <input
+                    autoComplete={
+                      isSignUp ? "new-password" : "current-password"
+                    }
+                    className="auth-input"
+                    name="password"
+                    placeholder="Al menos 8 caracteres"
+                    required
+                    type="password"
+                  />
+                </label>
 
-              {errorMessage && (
-                <p
-                  aria-live="polite"
-                  className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700"
-                  role="alert"
+                {errorMessage && (
+                  <p
+                    aria-live="polite"
+                    className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700"
+                    role="alert"
+                  >
+                    {errorMessage}
+                  </p>
+                )}
+
+                <button
+                  className="flex h-12 w-full items-center justify-center rounded-xl bg-[#1e5949] px-5 text-sm font-semibold text-white transition hover:bg-[#17483b] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1e5949] disabled:cursor-not-allowed disabled:opacity-60"
+                  disabled={isPending}
+                  type="submit"
                 >
-                  {errorMessage}
-                </p>
-              )}
+                  {isPending
+                    ? "Un momento…"
+                    : isSignUp
+                      ? "Crear cuenta"
+                      : "Entrar a mi cuenta"}
+                </button>
+              </form>
+            )}
 
-              <button
-                className="flex h-12 w-full items-center justify-center rounded-xl bg-[#1e5949] px-5 text-sm font-semibold text-white transition hover:bg-[#17483b] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1e5949] disabled:cursor-not-allowed disabled:opacity-60"
-                disabled={isPending}
-                type="submit"
-              >
-                {isPending
-                  ? "Un momento…"
-                  : isSignUp
-                    ? "Crear cuenta"
-                    : "Entrar a mi cuenta"}
-              </button>
-            </form>
-
-            <p className="mt-7 text-center text-sm text-[#52645d]">
-              {isSignUp ? "¿Ya tienes cuenta?" : "¿Primera vez en AgendaCR?"}{" "}
-              <Link
-                className="font-semibold text-[#1e5949] hover:underline"
-                href={isSignUp ? "/iniciar-sesion" : "/registro"}
-                onClick={(event) => {
-                  const returnTo = getSafeCallbackURL();
-                  if (returnTo !== "/inicio") {
-                    event.preventDefault();
-                    const nextPath = isSignUp ? "/iniciar-sesion" : "/registro";
-                    router.push(
-                      `${nextPath}?callbackURL=${encodeURIComponent(returnTo)}`,
-                    );
-                  }
-                }}
-              >
-                {isSignUp ? "Inicia sesión" : "Crea una cuenta"}
-              </Link>
-            </p>
+            {!verificationPending && (
+              <p className="mt-7 text-center text-sm text-[#52645d]">
+                {isSignUp ? "¿Ya tienes cuenta?" : "¿Primera vez en AgendaCR?"}{" "}
+                <Link
+                  className="font-semibold text-[#1e5949] hover:underline"
+                  href={isSignUp ? "/iniciar-sesion" : "/registro"}
+                  onClick={(event) => {
+                    const returnTo = getSafeCallbackURL();
+                    if (returnTo !== "/inicio") {
+                      event.preventDefault();
+                      const nextPath = isSignUp
+                        ? "/iniciar-sesion"
+                        : "/registro";
+                      router.push(
+                        `${nextPath}?callbackURL=${encodeURIComponent(returnTo)}`,
+                      );
+                    }
+                  }}
+                >
+                  {isSignUp ? "Inicia sesión" : "Crea una cuenta"}
+                </Link>
+              </p>
+            )}
             <p className="mt-10 text-center text-xs leading-5 text-[#52645d]">
               Al continuar, aceptas nuestros términos de servicio y política de
               privacidad.

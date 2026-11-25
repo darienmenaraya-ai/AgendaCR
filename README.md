@@ -122,7 +122,7 @@ flowchart TD
 - Los servicios se desactivan para conservar el historial relacionado con citas anteriores.
 - Las notificaciones de solicitud, confirmación y cancelación de citas usan Resend si se configuran `RESEND_API_KEY` y `RESEND_FROM_EMAIL`. Si faltan, las citas siguen funcionando sin enviar correos.
 - El recordatorio automático se ejecuta cada hora en Vercel y busca citas confirmadas para dentro de 24 horas. Configura `CRON_SECRET` en Vercel para proteger el endpoint del cron.
-- La verificación de correo todavía no está habilitada. Para enviar invitaciones, configura `RESEND_API_KEY` y `RESEND_FROM_EMAIL`; si faltan, el enlace sigue disponible para compartir manualmente.
+- Al configurar `RESEND_API_KEY` y `RESEND_FROM_EMAIL`, Better Auth exige verificar el correo al registrarse y vuelve a solicitar un enlace si una persona intenta iniciar sesión sin verificarlo. El enlace vence en una hora y, al abrirlo, la cuenta inicia sesión automáticamente. Sin las credenciales de Resend, la verificación queda desactivada para que el desarrollo local siga funcionando. Para enviar invitaciones del equipo, configura esas mismas variables; si faltan, el enlace se puede compartir manualmente.
 
 - El texto secundario del tema mantiene contraste suficiente sobre superficies claras, los cambios de disponibilidad se anuncian a lectores de pantalla y el calendario usa una lista semanal en pantallas estrechas.
 

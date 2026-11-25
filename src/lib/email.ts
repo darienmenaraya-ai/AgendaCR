@@ -1,3 +1,5 @@
+import { randomUUID } from "node:crypto";
+
 type AppointmentEmailContext = {
   appointmentId: string;
   businessName: string;
@@ -11,6 +13,32 @@ type AppointmentEmailContext = {
 type EmailDetail = { label: string; value: string; href?: string };
 
 export type StaffInvitationEmailResult = "sent" | "failed" | "not-configured";
+
+export async function sendEmailVerificationNotification({
+  to,
+  userName,
+  verificationUrl,
+}: {
+  to: string;
+  userName: string;
+  verificationUrl: string;
+}): Promise<boolean> {
+  return sendSafely({
+    to,
+    subject: "Confirma tu correo · AgendaCR",
+    idempotencyKey: `auth/email-verification/${randomUUID()}`,
+    heading: "Confirma tu correo",
+    introduction: `Hola ${userName}, confirma que esta dirección de correo te pertenece para activar tu cuenta de AgendaCR.`,
+    details: [
+      {
+        label: "Verificar correo",
+        value: verificationUrl,
+        href: verificationUrl,
+      },
+      { label: "Vigencia", value: "Este enlace vence en una hora." },
+    ],
+  });
+}
 
 export async function sendStaffInvitationNotification({
   to,

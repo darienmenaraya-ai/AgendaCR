@@ -233,7 +233,7 @@ Se agrega con una **migración SQL personalizada** (`drizzle-kit generate --cust
 - [x] Varios empleados con agenda propia
 - [x] Calendario administrativo (FullCalendar)
 - [x] Días libres y vacaciones
-- [x] Correos de solicitud, confirmación, cancelación y recordatorios (requieren configurar Resend y `CRON_SECRET`)
+- [x] Correos de verificación, solicitud, confirmación, cancelación y recordatorios (requieren configurar Resend y `CRON_SECRET`)
 - [x] Invitaciones del equipo por correo con Resend y enlace de respaldo
 
 ### Fase 3: diferenciación
