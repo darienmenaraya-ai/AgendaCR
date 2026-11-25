@@ -117,6 +117,7 @@ flowchart TD
 
 - La disponibilidad se consulta en `/api/availability` y se vuelve a validar en el servidor al solicitar una cita.
 - PostgreSQL aplica una restricción de exclusión para que dos solicitudes simultáneas no reserven el mismo horario del profesional. La migración personalizada está en `drizzle/`.
+- PostgreSQL también serializa los cambios de agenda de cada profesional para impedir que una ausencia y una cita se guarden simultáneamente en el mismo período. La migración comprueba primero que no haya solapamientos existentes.
 - Las acciones que modifican datos comprueban la sesión y que la persona tenga acceso al negocio o a la cita.
 - Los intentos de inicio de sesión y registro, las consultas de disponibilidad, las reservas y las invitaciones tienen límites compartidos entre instancias, respaldados por Neon.
 - Los servicios se desactivan para conservar el historial relacionado con citas anteriores.
@@ -142,10 +143,11 @@ flowchart TD
 | `npm run format:check`     | Verificar formato                                                       |
 | `npm run db:generate`      | Generar una migración desde el esquema                                  |
 | `npm run db:migrate`       | Aplicar migraciones pendientes                                          |
+| `npm run db:migrate:test`  | Aplicar migraciones solo a la rama indicada por `DATABASE_TEST_URL`     |
 | `npm run db:studio`        | Abrir Drizzle Studio                                                    |
 | `npm run test:db`          | Probar la concurrencia en una rama Neon aislada                         |
 
-La prueba `test:db` requiere `DATABASE_TEST_URL` en `.env.local`, con una rama de Neon separada de `DATABASE_URL` y las migraciones aplicadas. Comprueba que PostgreSQL permita solo una de dos reservas simultáneas para el mismo profesional y horario, y elimina sus registros al terminar. No la ejecutes contra la rama con datos reales.
+La prueba `test:db` requiere `DATABASE_TEST_URL` en `.env.local`, con una rama de Neon separada de `DATABASE_URL`. `npm run db:migrate:test` aplica únicamente las migraciones de `drizzle-test/` a esa rama y usa un registro `drizzle_test` separado; falla si la URL coincide con la de la base principal. La prueba comprueba que PostgreSQL permita solo una de dos reservas simultáneas para el mismo profesional y horario, y que una reserva y una ausencia simultáneas no puedan solaparse. Elimina sus registros al terminar. No la ejecutes contra la rama con datos reales.
 
 La prueba `test:e2e:booking` también requiere `DATABASE_TEST_URL` y valida el flujo desde el registro hasta la creación de una cita. Crea y borra un negocio, una cuenta y una cita temporales en esa rama. El comando se detiene si detecta que la rama de pruebas y la principal tienen el mismo host. No forma parte del CI porque depende de esa base de datos aislada.
 

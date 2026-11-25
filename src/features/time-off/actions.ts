@@ -10,6 +10,7 @@ import {
   createTimeOffSchema,
   deleteTimeOffSchema,
 } from "@/features/time-off/schemas";
+import { hasPostgresCode } from "@/lib/postgres-errors";
 
 export type TimeOffActionState = {
   error: string | null;
@@ -173,6 +174,12 @@ export async function createTimeOffAction(
     revalidatePath("/inicio");
     return { error: null, success: "Ausencia guardada." };
   } catch (error) {
+    if (hasPostgresCode(error, "23P01")) {
+      return {
+        error: "Ese perÃ­odo coincide con una cita o ausencia existente.",
+        success: null,
+      };
+    }
     console.error("No se pudo guardar la ausencia.", error);
     return {
       error: "No pudimos guardar la ausencia. Inténtalo de nuevo.",
