@@ -119,7 +119,7 @@ flowchart TD
 - PostgreSQL aplica una restricción de exclusión para que dos solicitudes simultáneas no reserven el mismo horario del profesional. La migración personalizada está en `drizzle/`.
 - PostgreSQL también serializa los cambios de agenda de cada profesional para impedir que una ausencia y una cita se guarden simultáneamente en el mismo período. La migración comprueba primero que no haya solapamientos existentes.
 - Las acciones que modifican datos comprueban la sesión y que la persona tenga acceso al negocio o a la cita.
-- Los intentos de inicio de sesión y registro, las consultas de disponibilidad, las reservas y las invitaciones tienen límites compartidos entre instancias, respaldados por Neon.
+- Los intentos de inicio de sesión y registro, las consultas de disponibilidad, las reservas, el calendario administrativo, los reportes de pago y las invitaciones tienen límites compartidos entre instancias, respaldados por Neon.
 - Los servicios se desactivan para conservar el historial relacionado con citas anteriores.
 - Las notificaciones de solicitud, confirmación y cancelación de citas usan Resend si se configuran `RESEND_API_KEY` y `RESEND_FROM_EMAIL`. Si faltan, las citas siguen funcionando sin enviar correos.
 - El recordatorio automático se ejecuta cada hora en Vercel y busca citas confirmadas para dentro de 24 horas. Configura `CRON_SECRET` en Vercel para proteger el endpoint del cron.

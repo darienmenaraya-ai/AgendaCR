@@ -262,7 +262,7 @@ Se agrega con una **migración SQL personalizada** (`drizzle-kit generate --cust
 - [x] Contraseñas con hash seguro; sesiones en cookies httpOnly (Better Auth)
 - [x] Validación con Zod en las entradas de la aplicación
 - [x] Autorización comprobada en cada acción revisada
-- [x] Límite de peticiones en autenticación, disponibilidad, reservas e invitaciones
+- [x] Límite de peticiones en autenticación, disponibilidad, reservas, calendario, pagos e invitaciones
 - [x] Sin secretos en el repositorio
 - [x] Pruebas de la lógica de disponibilidad
 - [x] Prueba de concurrencia: dos reservas simultáneas del mismo horario, solo una gana

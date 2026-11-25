@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { connection } from "next/server";
 
 import { appointmentCalendarQuerySchema } from "@/features/appointments/calendar-schemas";
+import { checkRateLimit, type RateLimitResult } from "@/lib/rate-limit";
 
 const MAX_RANGE_MS = 62 * 24 * 60 * 60 * 1_000;
 
@@ -40,6 +41,34 @@ export async function GET(request: Request) {
       return Response.json(
         { error: "Inicia sesión para continuar." },
         { status: 401 },
+      );
+    }
+
+    let limit: RateLimitResult;
+    try {
+      limit = await checkRateLimit({
+        scope: "appointment-calendar",
+        identifier: session.user.id,
+        maximum: 120,
+        windowSeconds: 60,
+      });
+    } catch (error) {
+      console.error("No se pudo comprobar el lÃ­mite del calendario.", error);
+      return Response.json(
+        { error: "No podemos cargar el calendario en este momento." },
+        { status: 503 },
+      );
+    }
+    if (!limit.allowed) {
+      return Response.json(
+        {
+          error:
+            "Hiciste muchas consultas. Espera un minuto e intÃ©ntalo de nuevo.",
+        },
+        {
+          status: 429,
+          headers: { "Retry-After": String(limit.retryAfterSeconds) },
+        },
       );
     }
 

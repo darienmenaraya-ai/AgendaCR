@@ -7,6 +7,7 @@ import {
   reportPaymentSchema,
   reviewPaymentSchema,
 } from "@/features/payments/schemas";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 export type PaymentActionState = {
   error: string | null;
@@ -32,6 +33,20 @@ export async function reportPaymentAction(
     const session = await auth.api.getSession({ headers: await headers() });
     if (!session) {
       return { error: "Inicia sesión para reportar un pago.", success: null };
+    }
+
+    const limit = await checkRateLimit({
+      scope: "payment-report",
+      identifier: session.user.id,
+      maximum: 5,
+      windowSeconds: 60 * 60,
+    });
+    if (!limit.allowed) {
+      return {
+        error:
+          "Llegaste al máximo de reportes de pago por ahora. Inténtalo más tarde.",
+        success: null,
+      };
     }
 
     const { db } = await import("@/db");
