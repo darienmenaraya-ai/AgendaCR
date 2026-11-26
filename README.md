@@ -170,4 +170,7 @@ La primera vez, instala el navegador de pruebas con `npx playwright install chro
 | `RESEND_API_KEY`        | No              | Clave de Resend para notificaciones de citas                                  |
 | `RESEND_FROM_EMAIL`     | No              | Remitente autorizado en Resend, por ejemplo `AgendaCR <citas@tu-dominio.com>` |
 | `CRON_SECRET`           | No              | Secreto aleatorio para autenticar el cron de recordatorios                    |
-| `AI_API_KEY`            | No              | Reservada para una fase futura                                                |
+| `AI_API_KEY`            | No              | Clave de API de OpenAI para el asistente de reservas                          |
+| `AI_MODEL`              | No              | Modelo de OpenAI; por defecto `gpt-4.1-mini`                                  |
+
+El asistente de reservas aparece en los perfiles públicos cuando la persona inició sesión y `AI_API_KEY` está configurada. Usa el servicio y la fecha elegidos para consultar disponibilidad, sugiere horarios confirmados por AgendaCR y nunca crea ni confirma citas. La solicitud final sigue pasando por el formulario y las validaciones habituales. Las consultas se limitan a 8 cada 10 minutos y 20 al día por cuenta, además de 60 cada 24 horas para todo el proyecto; cada respuesta se limita a 350 tokens. Para activarlo, crea una clave de API de OpenAI (la clave de Resend es solo para correos) y agrega `AI_API_KEY=...` a `.env.local`. Opcionalmente, configura `AI_MODEL`.

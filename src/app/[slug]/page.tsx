@@ -240,6 +240,7 @@ async function PublicBusinessContent({ params }: PublicBusinessPageProps) {
                   services={publicServices}
                   timeZone={business.timezone}
                   today={today}
+                  assistantConfigured={Boolean(process.env.AI_API_KEY)}
                 />
               </div>
             ) : (

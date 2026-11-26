@@ -22,9 +22,12 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^4.0.123",
+    "@ai-sdk/react": "^4.0.186",
     "@better-auth/drizzle-adapter": "^1.7.27",
     "@fullcalendar/react": "^7.1.5",
     "@neondatabase/serverless": "^1.2.1",
+    "ai": "^7.0.181",
     "better-auth": "^1.7.27",
     "drizzle-orm": "^1.0.0-rc.6",
     "next": "16.4.6",

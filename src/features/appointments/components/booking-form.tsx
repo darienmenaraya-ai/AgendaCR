@@ -7,6 +7,7 @@ import {
   createAppointmentAction,
   type AppointmentActionState,
 } from "@/features/appointments/actions";
+import { BookingAssistant } from "@/features/ai-assistant/components/booking-assistant";
 
 type PublicService = {
   id: string;
@@ -45,11 +46,13 @@ export function BookingForm({
   services,
   timeZone,
   today,
+  assistantConfigured,
 }: {
   businessId: string;
   services: PublicService[];
   timeZone: string;
   today: string;
+  assistantConfigured: boolean;
 }) {
   const [state, action, isPending] = useActionState(
     createAppointmentAction,
@@ -176,6 +179,15 @@ export function BookingForm({
           value={date}
         />
       </label>
+
+      <BookingAssistant
+        key={`${serviceId}:${date}`}
+        businessId={businessId}
+        date={date}
+        isConfigured={assistantConfigured}
+        serviceId={serviceId}
+        serviceName={selectedService?.name ?? "el servicio"}
+      />
 
       <fieldset aria-busy={isLoadingSlots}>
         <legend className="text-sm font-medium">Horarios disponibles</legend>
