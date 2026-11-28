@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandLogo } from "@/components/brand/brand-logo";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { connection } from "next/server";
@@ -285,12 +286,10 @@ async function AuthenticatedHome() {
       <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5 sm:px-10">
         <Link
           href="/"
-          className="flex items-center gap-3 font-semibold tracking-tight"
+          aria-label="AgendaCR, inicio"
+          className="flex items-center"
         >
-          <span className="grid size-10 place-items-center rounded-xl bg-[#1e5949] text-[#c5efd2]">
-            <CalendarMark />
-          </span>
-          <span className="text-xl">AgendaCR</span>
+          <BrandLogo className="h-8 w-auto sm:h-9" />
         </Link>
         <SignOutButton />
       </header>
@@ -625,40 +624,5 @@ function SetupStep({
         <p className="mt-1 text-sm leading-6 text-white/65">{text}</p>
       </div>
     </div>
-  );
-}
-
-function CalendarMark() {
-  return (
-    <svg
-      aria-hidden="true"
-      fill="none"
-      height="20"
-      viewBox="0 0 24 24"
-      width="20"
-    >
-      <rect
-        height="16"
-        rx="3"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        width="18"
-        x="3"
-        y="5"
-      />
-      <path
-        d="M16 3v4M8 3v4M3 10h18"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeWidth="1.8"
-      />
-      <path
-        d="m9 15 2 2 4-4"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.8"
-      />
-    </svg>
   );
 }

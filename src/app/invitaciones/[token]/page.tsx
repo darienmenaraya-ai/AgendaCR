@@ -6,6 +6,7 @@ import { connection } from "next/server";
 import { Suspense } from "react";
 import { eq } from "drizzle-orm";
 
+import { BrandLogo } from "@/components/brand/brand-logo";
 import { AcceptInvitationForm } from "@/features/staff/components/accept-invitation-form";
 import { SwitchAccountButton } from "@/features/staff/components/switch-account-button";
 
@@ -68,11 +69,8 @@ async function InvitationContent({ params }: InvitationPageProps) {
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#f5f7f6] px-4 py-10 text-[#172b27]">
       <section className="w-full max-w-lg rounded-[24px] border border-[#e2eae4] bg-white p-6 shadow-[0_18px_60px_rgba(30,67,55,0.08)] sm:p-9">
-        <Link
-          className="text-sm font-semibold text-[#34735e] hover:underline"
-          href="/"
-        >
-          AgendaCR
+        <Link aria-label="AgendaCR, inicio" className="inline-flex" href="/">
+          <BrandLogo className="h-8 w-auto" />
         </Link>
         <p className="mt-8 text-xs font-semibold uppercase tracking-[0.14em] text-[#34735e]">
           INVITACIÓN AL EQUIPO

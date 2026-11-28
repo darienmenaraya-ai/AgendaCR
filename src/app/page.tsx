@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandLogo } from "@/components/brand/brand-logo";
 
 export default function Home() {
   return (
@@ -6,12 +7,10 @@ export default function Home() {
       <header className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-y-2 px-6 py-5 sm:flex-nowrap sm:gap-y-0 sm:px-10 lg:px-12">
         <Link
           href="/"
-          className="flex items-center gap-2 font-semibold tracking-tight sm:gap-3"
+          aria-label="AgendaCR, inicio"
+          className="flex items-center"
         >
-          <span className="grid size-10 place-items-center rounded-xl bg-[#1e5949] text-[#c5efd2]">
-            <CalendarMark />
-          </span>
-          <span className="text-lg sm:text-xl">AgendaCR</span>
+          <BrandLogo className="h-8 w-auto sm:h-9" />
         </Link>
         <nav className="ml-auto flex items-center gap-0 text-sm font-semibold sm:gap-3">
           <Link
@@ -203,40 +202,5 @@ function Feature({
         <p className="mt-1.5 text-sm leading-6 text-[#52645d]">{text}</p>
       </div>
     </article>
-  );
-}
-
-function CalendarMark() {
-  return (
-    <svg
-      aria-hidden="true"
-      fill="none"
-      height="20"
-      viewBox="0 0 24 24"
-      width="20"
-    >
-      <rect
-        height="16"
-        rx="3"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        width="18"
-        x="3"
-        y="5"
-      />
-      <path
-        d="M16 3v4M8 3v4M3 10h18"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeWidth="1.8"
-      />
-      <path
-        d="m9 15 2 2 4-4"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.8"
-      />
-    </svg>
   );
 }

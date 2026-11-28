@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 
+import { BrandLogo } from "@/components/brand/brand-logo";
 import { authClient } from "@/lib/auth-client";
 import { signInSchema, signUpSchema } from "@/lib/auth-validation";
 
@@ -108,12 +109,10 @@ export function AuthForm({ mode }: AuthFormProps) {
           <div className="absolute -bottom-36 -left-20 size-96 rounded-full border border-white/10" />
           <Link
             href="/"
-            className="relative flex items-center gap-3 font-semibold tracking-tight"
+            aria-label="AgendaCR, inicio"
+            className="relative flex items-center"
           >
-            <span className="grid size-10 place-items-center rounded-xl bg-[#b9e6c9] text-[#163e35]">
-              <CalendarMark />
-            </span>
-            <span className="text-xl">AgendaCR</span>
+            <BrandLogo className="h-10 w-auto" variant="dark" />
           </Link>
 
           <div className="relative max-w-sm">
@@ -145,12 +144,10 @@ export function AuthForm({ mode }: AuthFormProps) {
           <div className="w-full max-w-md">
             <Link
               href="/"
-              className="mb-10 flex items-center gap-2 font-semibold tracking-tight lg:hidden"
+              aria-label="AgendaCR, inicio"
+              className="mb-10 flex items-center lg:hidden"
             >
-              <span className="grid size-9 place-items-center rounded-xl bg-[#163e35] text-[#b9e6c9]">
-                <CalendarMark />
-              </span>
-              <span className="text-lg">AgendaCR</span>
+              <BrandLogo className="h-8 w-auto" />
             </Link>
             <p className="text-sm font-medium text-[#34735e]">
               {isSignUp ? "EMPIEZA GRATIS" : "QUÉ BUENO VERTE"}
@@ -312,39 +309,4 @@ function getSafeCallbackURL(): string {
   } catch {
     return "/inicio";
   }
-}
-
-function CalendarMark() {
-  return (
-    <svg
-      aria-hidden="true"
-      fill="none"
-      height="20"
-      viewBox="0 0 24 24"
-      width="20"
-    >
-      <rect
-        height="16"
-        rx="3"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        width="18"
-        x="3"
-        y="5"
-      />
-      <path
-        d="M16 3v4M8 3v4M3 10h18"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeWidth="1.8"
-      />
-      <path
-        d="m9 15 2 2 4-4"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.8"
-      />
-    </svg>
-  );
 }

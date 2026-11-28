@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   manifest: "/manifest.webmanifest",
   icons: {
     icon: "/icon.svg",
-    apple: "/apple-touch-icon.svg",
+    apple: "/apple-touch-icon.png",
   },
   metadataBase: new URL(process.env.BETTER_AUTH_URL ?? "http://localhost:3000"),
   title: {
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#163e35",
+  themeColor: "#1e5949",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
