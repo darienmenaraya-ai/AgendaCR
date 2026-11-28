@@ -8,7 +8,6 @@ import {
   assistantRequestSchema,
   buildAssistantSystemPrompt,
 } from "@/features/ai-assistant/schemas";
-import { auth } from "@/lib/auth";
 import { checkRateLimit } from "@/lib/rate-limit";
 
 export const maxDuration = 30;
@@ -16,6 +15,7 @@ export const maxDuration = 30;
 export async function POST(request: Request) {
   await connection();
 
+  const { auth } = await import("@/lib/auth");
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session) {
     return Response.json(
