@@ -406,6 +406,21 @@ async function AuthenticatedHome() {
             businessName={business.name}
             key={`calendar-${business.id}`}
             timeZone={business.timezone}
+            workingHours={businessSchedules.filter(
+              ({ staffId }) =>
+                businessTeamMembers.some(
+                  (professional) =>
+                    professional.id === staffId &&
+                    professional.businessId === business.id &&
+                    professional.active,
+                ) ||
+                ownStaffMemberships.some(
+                  (professional) =>
+                    professional.id === staffId &&
+                    professional.businessId === business.id &&
+                    professional.active,
+                ),
+            )}
           />
         ))}
 
@@ -422,6 +437,9 @@ async function AuthenticatedHome() {
               key={`calendar-${professional.id}`}
               staffId={professional.id}
               timeZone={professional.timezone}
+              workingHours={businessSchedules.filter(
+                (hours) => hours.staffId === professional.id,
+              )}
             />
           ))}
 

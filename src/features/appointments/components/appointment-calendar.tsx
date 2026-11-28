@@ -40,11 +40,13 @@ export function AppointmentCalendar({
   businessName,
   staffId,
   timeZone,
+  workingHours,
 }: {
   businessId: string;
   businessName: string;
   staffId?: string;
   timeZone: string;
+  workingHours: { startTime: string; endTime: string }[];
 }) {
   const calendarRef = useRef<CalendarRef | null>(null);
   const [isCompact, setIsCompact] = useState(false);
@@ -52,6 +54,7 @@ export function AppointmentCalendar({
     useState<AppointmentCalendarEvent | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const appointmentsById = useRef(new Map<string, AppointmentCalendarEvent>());
+  const weekHours = getWeekViewHours(workingHours);
 
   useEffect(() => {
     const compactViewport = window.matchMedia("(max-width: 639px)");
@@ -209,9 +212,16 @@ export function AppointmentCalendar({
             listPlugin,
             interactionPlugin,
           ]}
-          slotDuration="00:15:00"
           titleFormat={{ day: "numeric", month: "short", year: "numeric" }}
           timeZone={timeZone}
+          views={{
+            timeGridWeek: {
+              slotMinTime: weekHours.start,
+              slotMaxTime: weekHours.end,
+              scrollTime: weekHours.start,
+              slotDuration: "00:30:00",
+            },
+          }}
         />
       </div>
 
@@ -223,6 +233,23 @@ export function AppointmentCalendar({
       )}
     </section>
   );
+}
+
+function getWeekViewHours(
+  workingHours: { startTime: string; endTime: string }[],
+): { start: string; end: string } {
+  if (workingHours.length === 0) {
+    return { start: "08:00:00", end: "18:00:00" };
+  }
+
+  return {
+    start: workingHours
+      .map(({ startTime }) => startTime)
+      .reduce((earliest, time) => (time < earliest ? time : earliest)),
+    end: workingHours
+      .map(({ endTime }) => endTime)
+      .reduce((latest, time) => (time > latest ? time : latest)),
+  };
 }
 
 function AppointmentDetails({
